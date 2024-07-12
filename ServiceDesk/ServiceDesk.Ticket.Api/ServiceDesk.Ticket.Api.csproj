@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,11 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServiceDesk.Ticket.Storage\ServiceDesk.Ticket.Storage.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Services\" />
+	  <ProjectReference Include="..\ServiceDesk.Ticket.CrossCutting\ServiceDesk.Ticket.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

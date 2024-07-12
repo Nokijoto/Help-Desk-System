@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Ticket.Storage", "ServiceDesk.Ticket.Storage\ServiceDesk.Ticket.Storage.csproj", "{073EC578-901D-41E3-BDF7-EBB3C9B8924A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Ticket.CrossCutting", "ServiceDesk.Ticket.CrossCutting\ServiceDesk.Ticket.CrossCutting.csproj", "{B520D17F-BC34-4F36-A6EB-3B50CBB4730C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{073EC578-901D-41E3-BDF7-EBB3C9B8924A} = {073EC578-901D-41E3-BDF7-EBB3C9B8924A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Ticket.Api", "ServiceDesk.Ticket.Api\ServiceDesk.Ticket.Api.csproj", "{070F0FBA-580E-4FFD-AF7A-6AAC6A08D08C}"
 	ProjectSection(ProjectDependencies) = postProject

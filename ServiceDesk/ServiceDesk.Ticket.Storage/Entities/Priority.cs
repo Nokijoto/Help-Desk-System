@@ -10,5 +10,7 @@ namespace ServiceDesk.Ticket.Storage.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+
+        public IEnumerable<Ticket> Tickets { get; set; }
     }
 }

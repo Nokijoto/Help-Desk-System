@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServiceDesk.Ticket.Api;
+using ServiceDesk.Ticket.Api.Interfaces;
+using ServiceDesk.Ticket.Api.Services;
 using ServiceDesk.Ticket.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),sqlOptions => sqlOptions.MigrationsAssembly("ServiceDesk.Ticket.Storage")));
+builder.Services.AddAutoMapper(typeof(TicketMappingProfile).Assembly);
 builder.Services.AddScoped<Seeder>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 var app = builder.Build();
 

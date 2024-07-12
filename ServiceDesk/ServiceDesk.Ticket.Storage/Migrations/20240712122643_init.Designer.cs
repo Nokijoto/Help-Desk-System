@@ -12,7 +12,7 @@ using ServiceDesk.Ticket.Storage;
 namespace ServiceDesk.Ticket.Storage.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    [Migration("20240711133446_init")]
+    [Migration("20240712122643_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Note", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Note", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Priority", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Priority", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.ToTable("Priorities");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Status", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Status", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.ToTable("Statuses");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Task", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Task", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +107,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Ticket", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Ticket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,9 +150,9 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Note", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Note", b =>
                 {
-                    b.HasOne("ServiceDesk.Ticket.Storage.Entity.Ticket", "Ticket")
+                    b.HasOne("ServiceDesk.Ticket.Storage.Entities.Ticket", "Ticket")
                         .WithMany("Notes")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -161,9 +161,9 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Task", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Task", b =>
                 {
-                    b.HasOne("ServiceDesk.Ticket.Storage.Entity.Ticket", "Ticket")
+                    b.HasOne("ServiceDesk.Ticket.Storage.Entities.Ticket", "Ticket")
                         .WithMany("Tasks")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -172,16 +172,16 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Ticket", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Ticket", b =>
                 {
-                    b.HasOne("ServiceDesk.Ticket.Storage.Entity.Priority", "Priority")
-                        .WithMany()
+                    b.HasOne("ServiceDesk.Ticket.Storage.Entities.Priority", "Priority")
+                        .WithMany("Tickets")
                         .HasForeignKey("PriorityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ServiceDesk.Ticket.Storage.Entity.Status", "Status")
-                        .WithMany()
+                    b.HasOne("ServiceDesk.Ticket.Storage.Entities.Status", "Status")
+                        .WithMany("Tickets")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -191,7 +191,17 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entity.Ticket", b =>
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Priority", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Status", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("ServiceDesk.Ticket.Storage.Entities.Ticket", b =>
                 {
                     b.Navigation("Notes");
 
