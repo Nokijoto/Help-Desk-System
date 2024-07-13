@@ -1,15 +1,14 @@
-﻿using Common.Entities;
+﻿using Common.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceDesk.Assets.Storage.Entities
+namespace ServiceDesk.Assets.CrossCutting.Dtos
 {
-    public class Asset : BaseEntity
+    public class AssetDto: BaseDto
     {
-
         public string? Name { get; set; }
         public string? Status { get; set; }
         public string? Location { get; set; }
@@ -27,6 +26,5 @@ namespace ServiceDesk.Assets.Storage.Entities
         public string? Comment { get; set; }              // Komentarz
 
         public string? Discriminator { get; set; }       // Discriminator
-
     }
 }

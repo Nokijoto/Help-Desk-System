@@ -8,6 +8,7 @@ namespace CrudBase
 {
     public enum CrudOperationResultStatus
     {
+        None,
         Success,
         Failure,
         RecordNotFound
