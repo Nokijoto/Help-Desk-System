@@ -75,16 +75,7 @@ namespace ServiceDesk.Assets.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<CrudOperationResult<ComputerDto>>> UpdateComputer(Guid id, CreateComputerDto computerDto)
         {
-            if (id != _mapper.Map<ComputerDto>(computerDto).Guid)
-            {
-                var result = new CrudOperationResultBuilder<ComputerDto>()
-                    .WithStatus(CrudOperationResultStatus.Failure)
-                    .WithMessage("Computer ID mismatch")
-                    .Build();
-                return BadRequest(result);
-            }
-
-            await _computerService.UpdateAsync(_mapper.Map<ComputerDto>(computerDto));
+            await _computerService.UpdateAsync(id,_mapper.Map<ComputerDto>(computerDto));
             var updateResult = new CrudOperationResultBuilder<ComputerDto>()
                 .WithStatus(CrudOperationResultStatus.Success)
                 .WithResult(_mapper.Map<ComputerDto>(computerDto))
@@ -105,19 +96,19 @@ namespace ServiceDesk.Assets.API.Controllers
 
             return Ok(result);
         }
-        [HttpPost("filter")]
-        public async Task<ActionResult<CrudOperationResult<List<ComputerDto>>>> FilterComputers([FromBody] Dictionary<string, object> searchParams)
-        {
+        //[HttpPost("filter")]
+        //public async Task<ActionResult<CrudOperationResult<List<ComputerDto>>>> FilterComputers([FromBody] AssetFilterDto filter)
+        //{
            
-            var computers = await _computerService.FilterAsync(searchParams);
-            var result = new CrudOperationResultBuilder<List<ComputerDto>>()
-                .WithStatus(CrudOperationResultStatus.Success)
-                .WithResult(computers)
-                .WithMessage("Computers retrieved successfully")
-                .Build();
+        //    var computers = await _computerService.GetFilteredAssets<ComputerDto>(filter);
+        //    var result = new CrudOperationResultBuilder<List<ComputerDto>>()
+        //        .WithStatus(CrudOperationResultStatus.Success)
+        //        .WithResult(computers)
+        //        .WithMessage("Computers retrieved successfully")
+        //        .Build();
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
     }
 }

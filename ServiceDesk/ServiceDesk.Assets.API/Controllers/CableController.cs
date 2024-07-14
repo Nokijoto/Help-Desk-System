@@ -76,16 +76,7 @@ namespace ServiceDesk.Assets.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<CrudOperationResult<CableDto>>> UpdateCable(Guid id, CreateCableDto CableDto)
         {
-            //if (id != _mapper.Map<CableDto>(CableDto).Guid)
-            //{
-            //    var result = new CrudOperationResultBuilder<CableDto>()
-            //        .WithStatus(CrudOperationResultStatus.Failure)
-            //        .WithMessage("Cable ID mismatch")
-            //        .Build();
-            //    return BadRequest(result);
-            //}
-
-            await _CableService.UpdateAsync(_mapper.Map<CableDto>(CableDto));
+            await _CableService.UpdateAsync(id,_mapper.Map<CableDto>(CableDto));
             var updateResult = new CrudOperationResultBuilder<CableDto>()
                 .WithStatus(CrudOperationResultStatus.Success)
                 .WithResult(_mapper.Map<CableDto>(CableDto))
@@ -107,18 +98,18 @@ namespace ServiceDesk.Assets.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("filter")]
-        public async Task<ActionResult<CrudOperationResult<List<CableDto>>>> FilterCables([FromBody] Dictionary<string, object> searchParams)
-        {
+        //[HttpPost("filter")]
+        //public async Task<ActionResult<CrudOperationResult<List<CableDto>>>> FilterCables([FromBody] AssetFilterDto filter)
+        //{
            
-            var cables = await _CableService.FilterAsync(searchParams);
-            var result = new CrudOperationResultBuilder<List<CableDto>>()
-                .WithStatus(CrudOperationResultStatus.Success)
-                .WithResult(cables)
-                .WithMessage("Cables retrieved successfully")
-                .Build();
+        //    var cables = await _CableService.GetFilteredAssets<CableDto>(filter);
+        //    var result = new CrudOperationResultBuilder<List<CableDto>>()
+        //        .WithStatus(CrudOperationResultStatus.Success)
+        //        .WithResult(cables)
+        //        .WithMessage("Cables retrieved successfully")
+        //        .Build();
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
     }
 }

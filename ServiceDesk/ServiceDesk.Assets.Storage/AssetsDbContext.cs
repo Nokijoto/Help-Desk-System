@@ -15,13 +15,19 @@ namespace ServiceDesk.Assets.Storage
     {
         public DbSet<Asset> Assets { get; set; }
         public DbSet<Computer> Computers { get; set; }
-
         public DbSet<Cable> Cables { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<Rack> Racks { get; set; }
+        public DbSet<PDU> PDUs { get; set; }
+        public DbSet<Entities.Monitor> Monitors { get; set; }
+        public DbSet<Phone> Phones { get; set; }
+        public DbSet<Printer> Printers { get; set; }
+        public DbSet<Simcard> Simcards { get; set; }
+        public DbSet<Software> Softwares { get; set; }
 
         public AssetsDbContext(DbContextOptions<AssetsDbContext> options) : base(options)
         {
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,21 +35,19 @@ namespace ServiceDesk.Assets.Storage
                 .HasDiscriminator<string>("Discriminator")
                 .HasValue<Asset>("Asset")
                 .HasValue<Computer>("Computer")
-                .HasValue<Cable>("Cable");
+                .HasValue<Cable>("Cable")
+                .HasValue<Device>("Device")
+                .HasValue<Rack>("Rack")
+                .HasValue<PDU>("PDU")
+                .HasValue<Entities.Monitor>("Monitor")
+                .HasValue<Phone>("Phone")
+                .HasValue<Printer>("Printer")
+                .HasValue<Simcard>("Simcard")
+                .HasValue<Software>("Software");
 
             modelBuilder.Entity<Asset>()
-           .Property(a => a.Id)
-           .ValueGeneratedOnAdd(); // Ensure identity column is auto-generated
-
+                .Property(a => a.Id)
+                .ValueGeneratedOnAdd(); // Ensure identity column is auto-generated
         }
     }
 }
-//public DbSet<AssetType> AssetTypes { get; set; }
-//public DbSet<AssetCategory> AssetCategories { get; set; }
-//public DbSet<Location> Locations { get; set; }
-//public DbSet<AssetHistory> AssetHistories { get; set; }
-//public DbSet<ContactInfo> Contacts { get; set; }
-//public DbSet<Manufacturer> Manufacturers { get; set; }
-
-//public DbSet<ServiceContract> ServiceContracts { get; set; }
-//public DbSet<Software> Softwares { get; set; }

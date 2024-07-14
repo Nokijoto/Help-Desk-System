@@ -1,4 +1,5 @@
-﻿using ServiceDesk.Assets.Storage.Entities;
+﻿using ServiceDesk.Assets.CrossCutting.Dtos;
+using ServiceDesk.Assets.Storage.Entities;
 
 namespace ServiceDesk.Assets.API.Interfaces
 {
@@ -7,8 +8,8 @@ namespace ServiceDesk.Assets.API.Interfaces
         Task<List<TDto>> GetAllAsync();
         Task<TDto> GetByIdAsync(Guid id);
         Task AddAsync(TDto assetDto);
-        Task UpdateAsync(TDto assetDto);
+        Task UpdateAsync(Guid id,TDto assetDto);
         Task DeleteAsync(Guid id);
-        Task<List<TDto>> FilterAsync(Dictionary<string, object> searchParams);
+        //Task<List<TDto>> GetFilteredAssets<TDto>(AssetFilterDto filter);
     }
 }
