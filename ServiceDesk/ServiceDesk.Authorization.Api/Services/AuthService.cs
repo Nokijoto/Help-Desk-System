@@ -31,11 +31,18 @@ namespace ServiceDesk.Authorization.Api.Services
         {
             var user = _mapper.Map<User.Storage.Entities.User>(registerDto);
             user.PasswordHash = _passwordHasher.HashPassword(user, registerDto.Password);
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            var result = await _userManager.CreateAsync(user);
 
             if (!result.Succeeded)
             {
                 throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+
+            if (!roleResult.Succeeded)
+            {
+                throw new Exception(string.Join(", ", roleResult.Errors.Select(e => e.Description)));
             }
         }
 
@@ -54,19 +61,26 @@ namespace ServiceDesk.Authorization.Api.Services
             {
                 throw new Exception("Invalid login attempt");
             }
+
             await _signInManager.SignInAsync(user, isPersistent: false);
-            
-            return GenerateJwtToken(user);
+
+            return await GenerateJwtToken(user);
         }
 
-        private string GenerateJwtToken(User.Storage.Entities.User user)
+        private async Task<string> GenerateJwtToken(User.Storage.Entities.User user)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        };
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -80,6 +94,7 @@ namespace ServiceDesk.Authorization.Api.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
+
 }
+

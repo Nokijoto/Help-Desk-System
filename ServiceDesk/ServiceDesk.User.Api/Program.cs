@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
+builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,7 +38,6 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddScoped<RoleService>();
-builder.Services.AddDbContext<UserDbContext>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<UserDbContext>()
@@ -75,11 +75,22 @@ builder.Services.AddSwaggerGen(option =>
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    using (var dbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>())
+    {
+        if (dbContext.Database.GetPendingMigrations().Any())
+        {
+            dbContext.Database.Migrate();
+        }
+    }
 }
 
 app.UseAuthentication();

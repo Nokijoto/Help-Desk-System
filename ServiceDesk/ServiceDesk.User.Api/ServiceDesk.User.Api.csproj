@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServiceDesk.Authorization.CrossCutting\ServiceDesk.Authorization.CrossCutting.csproj" />
     <ProjectReference Include="..\ServiceDesk.User.CrossCutting\ServiceDesk.User.CrossCutting.csproj" />
     <ProjectReference Include="..\ServiceDesk.User.Storage\ServiceDesk.User.Storage.csproj" />
   </ItemGroup>
