@@ -1,24 +1,23 @@
 ﻿using AutoMapper;
+using Gateway.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using ServiceDesk.Authorization.CrossCutting.Dtos;
-using ServiceDesk.Authorization.Storage.Entities;
 using ServiceDesk.User.Storage.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ServiceDesk.Authorization.Api.Services
+namespace Gateway.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<User.Storage.Entities.User> _userManager;
-        private readonly SignInManager<User.Storage.Entities.User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IPasswordHasher<User.Storage.Entities.User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AuthService(UserManager<User.Storage.Entities.User> userManager, SignInManager<User.Storage.Entities.User> signInManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User.Storage.Entities.User> passwordHasher)
+        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IConfiguration configuration, IPasswordHasher<User> passwordHasher)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -27,10 +26,10 @@ namespace ServiceDesk.Authorization.Api.Services
             _passwordHasher = passwordHasher;
         }
 
-        public async Task RegisterAsync(RegisterDto registerDto)
+        public async Task RegisterAsync(RegisterModel registerModel)
         {
-            var user = _mapper.Map<User.Storage.Entities.User>(registerDto);
-            user.PasswordHash = _passwordHasher.HashPassword(user, registerDto.Password);
+            var user = _mapper.Map<User>(registerModel);
+            user.PasswordHash = _passwordHasher.HashPassword(user, registerModel.Password);
             var result = await _userManager.CreateAsync(user);
 
             if (!result.Succeeded)
@@ -46,16 +45,16 @@ namespace ServiceDesk.Authorization.Api.Services
             }
         }
 
-        public async Task<string> LoginAsync(LoginDto loginDto)
+        public async Task<string> LoginAsync(LoginModel loginModel)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            var user = await _userManager.FindByEmailAsync(loginModel.Email);
 
             if (user == null)
             {
                 throw new Exception("Invalid login attempt");
             }
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginModel.Password);
 
             if (result != PasswordVerificationResult.Success)
             {
@@ -67,7 +66,7 @@ namespace ServiceDesk.Authorization.Api.Services
             return await GenerateJwtToken(user);
         }
 
-        private async Task<string> GenerateJwtToken(User.Storage.Entities.User user)
+        private async Task<string> GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
@@ -95,6 +94,4 @@ namespace ServiceDesk.Authorization.Api.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
-
 }
-

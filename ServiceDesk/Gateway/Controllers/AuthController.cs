@@ -1,85 +1,55 @@
-﻿using Gateway.Areas.Identity.Pages.Account;
+﻿using Gateway.Models;
+using Gateway.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ServiceDesk.Authorization.CrossCutting.Dtos;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Gateway.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IAuthService _authService;
 
-        public AuthController(IHttpClientFactory httpClientFactory)
+        public AuthController(IAuthService authService)
         {
-            _httpClientFactory = httpClientFactory;
+            _authService = authService;
         }
 
         [HttpGet]
         public IActionResult Login()
         {
-            ViewData["Title"] = "Log in";
             return View("~/Areas/Identity/Pages/Account/Login.cshtml");
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel)
+        public async Task<IActionResult> Register(RegisterModel registerModel)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(loginModel);
+                await _authService.RegisterAsync(registerModel);
+                return Ok();
             }
-
-            var loginDto = new LoginDto
+            catch (Exception ex)
             {
-                Email = loginModel.Input.Email,
-                Password = loginModel.Input.Password
-            };
-
-            var client = _httpClientFactory.CreateClient();
-            var content = new StringContent(JsonConvert.SerializeObject(loginDto), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:5023/auth/login", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var token = await response.Content.ReadAsStringAsync();
-                // Zapisz token w sesji lub w ciasteczku, aby móc go używać do autoryzacji
-                HttpContext.Session.SetString("JwtToken", token);
-                return RedirectToAction("Index", "Home"); // Przekierowanie po udanym zalogowaniu
+                return BadRequest(new { message = ex.Message });
             }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt");
-            return View(loginModel);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel registerModel)
+        public async Task<IActionResult> Login(LoginModel loginModel)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(registerModel);
+                var token = await _authService.LoginAsync(loginModel);
+                return Ok(new { Token = token });
             }
-
-            var registerDto = new RegisterDto
+            catch (Exception ex)
             {
-                Email = registerModel.Input.Email,
-                Password = registerModel.Input.Password
-                // Możesz dodać więcej pól do mapowania, jeśli są wymagane
-            };
-
-            var client = _httpClientFactory.CreateClient();
-            var content = new StringContent(JsonConvert.SerializeObject(registerDto), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:5023/auth/register", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Home"); // Przekierowanie po udanej rejestracji
+                return Unauthorized(new { message = ex.Message });
             }
-
-            ModelState.AddModelError(string.Empty, "Failed to register user");
-            return View(registerModel);
         }
     }
 }
+

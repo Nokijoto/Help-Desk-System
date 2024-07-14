@@ -13,19 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudBase", "CrudBase\CrudBa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{350EBBC7-0091-47FD-8806-7D2EF0BC0411}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{03A70B95-B798-4C47-AA4A-7648474457D3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.User.Api", "ServiceDesk.User.Api\ServiceDesk.User.Api.csproj", "{91DD396D-A680-4C83-B569-7A3F5920F3BC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.User.Storage", "ServiceDesk.User.Storage\ServiceDesk.User.Storage.csproj", "{5259D10C-EB0B-478E-8EBA-7D2DD4DE1D08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.User.CrossCutting", "ServiceDesk.User.CrossCutting\ServiceDesk.User.CrossCutting.csproj", "{B405DBB8-372B-4E25-8030-6E69D3758A7B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Authorization.Api", "ServiceDesk.Authorization.Api\ServiceDesk.Authorization.Api.csproj", "{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Authorization.CrossCutting", "ServiceDesk.Authorization.CrossCutting\ServiceDesk.Authorization.CrossCutting.csproj", "{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDesk.Authorization.Storage", "ServiceDesk.Authorization.Storage\ServiceDesk.Authorization.Storage.csproj", "{DDF03EBC-ED8B-4AA5-AD61-215E92778872}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,18 +49,6 @@ Global
 		{B405DBB8-372B-4E25-8030-6E69D3758A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B405DBB8-372B-4E25-8030-6E69D3758A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B405DBB8-372B-4E25-8030-6E69D3758A7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,9 +59,6 @@ Global
 		{91DD396D-A680-4C83-B569-7A3F5920F3BC} = {350EBBC7-0091-47FD-8806-7D2EF0BC0411}
 		{5259D10C-EB0B-478E-8EBA-7D2DD4DE1D08} = {350EBBC7-0091-47FD-8806-7D2EF0BC0411}
 		{B405DBB8-372B-4E25-8030-6E69D3758A7B} = {350EBBC7-0091-47FD-8806-7D2EF0BC0411}
-		{2A8BC4FC-F0B5-4E67-8394-F51EB87A7BE0} = {03A70B95-B798-4C47-AA4A-7648474457D3}
-		{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7} = {03A70B95-B798-4C47-AA4A-7648474457D3}
-		{DDF03EBC-ED8B-4AA5-AD61-215E92778872} = {03A70B95-B798-4C47-AA4A-7648474457D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B4AFCAE-49ED-4C0C-B9E4-BB293418E82E}
