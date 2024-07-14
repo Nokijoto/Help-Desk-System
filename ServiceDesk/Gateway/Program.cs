@@ -1,7 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
+using Gateway.Clients;
+using Gateway.Factories;
+using System.Net.Http.Headers;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IAssetClientFactory, AssetClientFactory>();
+//builder.Services.AddHttpClient<AssetClient<TDto>>(client =>
+//{
+//    client.BaseAddress = new Uri("http://localhost:5256/api/");
+//    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+//});
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 

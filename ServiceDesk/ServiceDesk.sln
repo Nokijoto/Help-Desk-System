@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Assets.Storage"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{C15A362F-3F57-4070-8238-385AECE1F68B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Storage", "Gateway.Storage\Gateway.Storage.csproj", "{9D585726-ACAD-4754-85ED-328338A0E917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{FDD241D3-3298-46D2-86BC-61B02E88FCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD241D3-3298-46D2-86BC-61B02E88FCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD241D3-3298-46D2-86BC-61B02E88FCF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D585726-ACAD-4754-85ED-328338A0E917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D585726-ACAD-4754-85ED-328338A0E917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D585726-ACAD-4754-85ED-328338A0E917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D585726-ACAD-4754-85ED-328338A0E917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
