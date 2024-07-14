@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceDesk.Assets.Storage;
 
@@ -11,9 +12,11 @@ using ServiceDesk.Assets.Storage;
 namespace ServiceDesk.Assets.Storage.Migrations
 {
     [DbContext(typeof(AssetsDbContext))]
-    partial class AssetsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714152104_otherentities")]
+    partial class otherentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
