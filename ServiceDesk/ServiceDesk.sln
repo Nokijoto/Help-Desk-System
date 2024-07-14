@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudBase", "CrudBase\CrudBase.csproj", "{D4BCBA50-FD5A-46C6-AA5B-591ECCC7F164}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDesk.Assets.API", "ServiceDesk.Assets.API\ServiceDesk.Assets.API.csproj", "{C45DE663-FECE-4CA4-B9CE-143C335EF79A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Assets.API", "ServiceDesk.Assets.API\ServiceDesk.Assets.API.csproj", "{C45DE663-FECE-4CA4-B9CE-143C335EF79A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDesk.Assets.CrossCutting", "ServiceDesk.Assets.CrossCutting\ServiceDesk.Assets.CrossCutting.csproj", "{4131115A-4B6D-4862-AB49-DFD4101FF45F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Assets.CrossCutting", "ServiceDesk.Assets.CrossCutting\ServiceDesk.Assets.CrossCutting.csproj", "{4131115A-4B6D-4862-AB49-DFD4101FF45F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDesk.Assets.Storage", "ServiceDesk.Assets.Storage\ServiceDesk.Assets.Storage.csproj", "{FDD241D3-3298-46D2-86BC-61B02E88FCF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Assets.Storage", "ServiceDesk.Assets.Storage\ServiceDesk.Assets.Storage.csproj", "{FDD241D3-3298-46D2-86BC-61B02E88FCF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{C15A362F-3F57-4070-8238-385AECE1F68B}"
 EndProject
