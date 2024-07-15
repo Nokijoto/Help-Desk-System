@@ -4,6 +4,7 @@ namespace EmailNotification.Services
 {
     public interface IMailService
     {
-        bool SendMail(MailData Mail_Data);
+        bool SendMail(MailData mailData, string Template);
+        Task<bool> SendMailAsync(MailData mailData, string Template);
     }
 }

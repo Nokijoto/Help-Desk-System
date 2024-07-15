@@ -6,44 +6,66 @@ using MailKit.Net.Smtp;
 namespace EmailNotification.Services
 {
     public class MailService : IMailService
-{
-    MailSettings Mail_Settings = null;
-    public MailService(IOptions<MailSettings> options)
     {
-        Mail_Settings = options.Value;
-    }
+        private readonly MailSettings _mailSettings;
+        private readonly Serilog.ILogger _logger;
 
-    public bool SendMail(MailData Mail_Data)
-    {
-        try
+        public MailService(IOptions<MailSettings> options, Serilog.ILogger logger)
         {
-            // MimeMessage - a class from MimeKit
-            MimeMessage email_Message = new MimeMessage();
-            MailboxAddress email_From = new MailboxAddress(Mail_Settings.SenderName, Mail_Settings.SenderEmail);
-            email_Message.From.Add(email_From);
-            MailboxAddress email_To = new MailboxAddress(Mail_Data.EmailToName, Mail_Data.EmailToId);
-            email_Message.To.Add(email_To);
-            email_Message.Subject = Mail_Data.EmailSubject;
+            _mailSettings = options.Value;
+            _logger = logger;
+        }
 
-            BodyBuilder emailBodyBuilder = new BodyBuilder();
-            emailBodyBuilder.TextBody = Mail_Data.EmailBody;
-            email_Message.Body = emailBodyBuilder.ToMessageBody();
+        public bool SendMail(MailData mailData, string Template)
+        {
+            return SendMailAsync(mailData, Template).GetAwaiter().GetResult();
+        }
 
-            // This is the SmtpClient class from the MailKit.Net.Smtp namespace, not the System.Net.Mail one
-            using (SmtpClient MailClient = new SmtpClient())
+        public async Task<bool> SendMailAsync(MailData mailData, string Template)
+        {
+            try
             {
-                MailClient.Connect(Mail_Settings.Server, Mail_Settings.Port, false); // UseSSL can be set to true if needed
-                MailClient.Authenticate(Mail_Settings.UserName, Mail_Settings.Password);
-                MailClient.Send(email_Message);
-                MailClient.Disconnect(true);
+                var emailMessage = new MimeMessage();
+                var emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                emailMessage.From.Add(emailFrom);
+                var emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                emailMessage.To.Add(emailTo);
+                emailMessage.Subject = mailData.EmailSubject;
+
+                var bodyBuilder = new BodyBuilder();
+
+                // Load and use the HTML template
+                var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", $"{Template}.html");
+                var templateContent = await File.ReadAllTextAsync(templatePath);
+                bodyBuilder.HtmlBody = templateContent.Replace("{Content}", mailData.EmailBody);
+
+                // Set the plain text body as well
+                bodyBuilder.TextBody = mailData.EmailBody;
+
+                emailMessage.Body = bodyBuilder.ToMessageBody();
+
+                using (var mailClient = new SmtpClient())
+                {
+                    mailClient.Connect(_mailSettings.Server, _mailSettings.Port, false);
+                    mailClient.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+                    await mailClient.SendAsync(emailMessage);
+                    mailClient.Disconnect(true);
+                }
+
+                // Log the successful email send
+                _logger.Information("Email sent successfully: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
+                    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, true);
+
+                return true;
             }
-            return true;
-        }
-        catch (Exception ex)
-        {
-            // Log or handle the exception
-            return false;
+            catch (Exception ex)
+            {
+                // Log the failed email send
+                _logger.Error(ex, "Failed to send email: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
+                    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, false);
+
+                return false;
+            }
         }
     }
-}
 }

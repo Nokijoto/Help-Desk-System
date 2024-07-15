@@ -9,16 +9,24 @@ namespace EmailNotification.Controllers
     [Route("[controller]")]
     public class MailController : ControllerBase
     {
-        IMailService Mail_Service = null;
-        //injecting the IMailService into the constructor
-        public MailController(IMailService _MailService)
+        private readonly IMailService _mailService;
+
+        // Injecting the IMailService into the constructor
+        public MailController(IMailService mailService)
         {
-            Mail_Service = _MailService;
+            _mailService = mailService;
         }
-        [HttpPost]
-        public bool SendMail(MailData Mail_Data)
+
+        /*[HttpPost]
+        public bool SendMail(MailData mailData)
         {
-            return Mail_Service.SendMail(Mail_Data);
+            return _mailService.SendMail(mailData);
+        }*/
+
+        [HttpPost("{Template}")]
+        public bool SendMail(MailData mailData, string Template)
+        {
+            return _mailService.SendMail(mailData, Template);
         }
     }
 }
