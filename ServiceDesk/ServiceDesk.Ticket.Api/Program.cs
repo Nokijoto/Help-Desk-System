@@ -17,6 +17,8 @@ builder.Services.AddDbContext<TicketDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(TicketMappingProfile).Assembly);
 builder.Services.AddScoped<Seeder>();
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();
 

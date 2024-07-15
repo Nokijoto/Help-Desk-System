@@ -10,11 +10,11 @@ namespace ServiceDesk.Ticket.Api.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
-        private readonly IMapper _mapper;
-        public TicketController(ITicketService ticketService, IMapper mapper)
+        
+        public TicketController(ITicketService ticketService)
         {
             _ticketService=ticketService;
-            _mapper = mapper;
+            
         }
         [HttpGet]
         public async Task<IEnumerable<TicketDto>> GetTickets()

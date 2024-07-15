@@ -10,5 +10,7 @@ namespace ServiceDesk.Ticket.CrossCutting.Dots
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
+        public Guid TicketId { get; set; }
+
     }
 }

@@ -23,7 +23,7 @@ namespace ServiceDesk.Ticket.Api.Services
         }
         public async Task<TicketDto> GetTicket(Guid id)
         {
-            var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            var ticket = await _dbContext.Tickets.Include(r=>r.Tasks).Include(r=>r.Notes).FirstOrDefaultAsync(t => t.Id == id);
             return _mapper.Map<TicketDto>(ticket);
         }
 
