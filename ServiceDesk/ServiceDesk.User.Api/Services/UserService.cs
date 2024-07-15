@@ -32,6 +32,13 @@ namespace ServiceDesk.User.Api.Services
             return _mapper.Map<UserDto>(user);
         }
 
+        public async Task<IEnumerable<UserDto>> GetAllUserAsync()
+        {
+            var users = _userManager.Users.ToList(); 
+
+            return _mapper.Map<IEnumerable<UserDto>>(users);
+        }
+
         public async Task<UserDto> GetUserByIdAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());

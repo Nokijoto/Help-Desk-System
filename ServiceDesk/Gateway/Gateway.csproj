@@ -30,8 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Views\Login\" />
-    <Folder Include="Views\Register\" />
+    <Folder Include="Views\Auth\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
 

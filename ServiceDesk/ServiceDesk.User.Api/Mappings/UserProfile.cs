@@ -12,7 +12,7 @@ namespace ServiceDesk.User.Api.Mappings
             CreateMap<CreateUserDto, User.Storage.Entities.User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
             CreateMap<UpdateUserDto, User.Storage.Entities.User>();
-            
+             
         }
 
     }
