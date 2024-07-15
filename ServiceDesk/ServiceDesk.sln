@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudBase", "CrudBase\CrudBase.csproj", "{D4BCBA50-FD5A-46C6-AA5B-591ECCC7F164}"
 EndProject
+<<<<<<< HEAD
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{350EBBC7-0091-47FD-8806-7D2EF0BC0411}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.User.Api", "ServiceDesk.User.Api\ServiceDesk.User.Api.csproj", "{91DD396D-A680-4C83-B569-7A3F5920F3BC}"
@@ -25,6 +26,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Authorization.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Authorization.CrossCutting", "ServiceDesk.Authorization.CrossCutting\ServiceDesk.Authorization.CrossCutting.csproj", "{D39BEB46-3D97-4F52-A26C-3E0FE5AB0AF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDesk.Authorization.Storage", "ServiceDesk.Authorization.Storage\ServiceDesk.Authorization.Storage.csproj", "{DDF03EBC-ED8B-4AA5-AD61-215E92778872}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification", "EmailNotification\EmailNotification.csproj", "{53E98B3D-7BD4-4381-B764-E74ABCD23E00}"
+>>>>>>> 069666aaaa37ef8f92efb9925f3d81801e1e9cab
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Authorization.Storage", "ServiceDesk.Authorization.Storage\ServiceDesk.Authorization.Storage.csproj", "{DDF03EBC-ED8B-4AA5-AD61-215E92778872}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailNotification", "EmailNotification\EmailNotification.csproj", "{53E98B3D-7BD4-4381-B764-E74ABCD23E00}"
@@ -48,6 +53,7 @@ Global
 		{D4BCBA50-FD5A-46C6-AA5B-591ECCC7F164}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BCBA50-FD5A-46C6-AA5B-591ECCC7F164}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BCBA50-FD5A-46C6-AA5B-591ECCC7F164}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{91DD396D-A680-4C83-B569-7A3F5920F3BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{91DD396D-A680-4C83-B569-7A3F5920F3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91DD396D-A680-4C83-B569-7A3F5920F3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -74,6 +80,12 @@ Global
 		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDF03EBC-ED8B-4AA5-AD61-215E92778872}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 069666aaaa37ef8f92efb9925f3d81801e1e9cab
 		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E98B3D-7BD4-4381-B764-E74ABCD23E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
