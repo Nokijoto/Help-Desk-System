@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceDesk.Ticket.CrossCutting.Dots
 {
-    public class TicketDto
+    public class DetailsTicketDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -15,5 +15,8 @@ namespace ServiceDesk.Ticket.CrossCutting.Dots
         public string PriorityName { get; set; }
         public string Requester { get; set; }
         public string Assignee { get; set; }
+
+        public IEnumerable<TaskDto> Tasks { get; set; }
+        public IEnumerable<NoteDto> Notes { get; set; }
     }
 }

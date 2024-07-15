@@ -45,7 +45,7 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                     StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriorityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Requester = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Assignee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Assignee = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

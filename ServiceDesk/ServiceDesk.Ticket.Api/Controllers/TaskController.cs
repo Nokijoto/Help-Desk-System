@@ -27,9 +27,9 @@ namespace ServiceDesk.Ticket.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask(TaskDto taskDto)
+        public async Task<IActionResult> CreateTask(Guid ticketId, CreateTaskDto taskDto)
         {
-            await _taskService.CreateTask(taskDto);
+            await _taskService.CreateTask(ticketId, taskDto);
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -38,7 +38,7 @@ namespace ServiceDesk.Ticket.Api.Controllers
             await _taskService.DeleteTask(id);
         }
         [HttpPut("{id}")]
-        public async Task UpdateTask(Guid id, TaskDto taskDto)
+        public async Task UpdateTask(Guid id, CreateTaskDto taskDto)
         {
             await _taskService.UpdateTask(id, taskDto);
         }

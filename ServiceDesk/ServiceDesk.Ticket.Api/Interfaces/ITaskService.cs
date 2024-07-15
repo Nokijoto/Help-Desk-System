@@ -6,8 +6,8 @@ namespace ServiceDesk.Ticket.Api.Interfaces
     {
         Task<IEnumerable<TaskDto>> GetTasks();
         Task<TaskDto> GetTask(Guid id);
-        Task CreateTask(TaskDto taskDto);
+        Task CreateTask(Guid ticketId, CreateTaskDto taskDto);
         Task DeleteTask(Guid id);
-        Task UpdateTask(Guid id, TaskDto taskDto);
+        Task UpdateTask(Guid id, CreateTaskDto taskDto);
     }
 }

@@ -30,9 +30,15 @@ namespace ServiceDesk.Ticket.Api.Services
         }
         
 
-       public async Task CreateTask(TaskDto taskDto)
+       public async Task CreateTask(Guid ticketId, CreateTaskDto taskDto)
         {
+            var ticketExists = await _dbContext.Tickets.AnyAsync(t => t.Id == ticketId);
+            if (!ticketExists)
+            {
+                throw new InvalidOperationException("Podane zgłoszenmie nie istnieje.");
+            }
             var task = _mapper.Map<Storage.Entities.Task>(taskDto);
+            task.TicketId = ticketId;
             _dbContext.Tasks.Add(task);
             await _dbContext.SaveChangesAsync();
         }
@@ -47,12 +53,12 @@ namespace ServiceDesk.Ticket.Api.Services
             }
         }
 
-        public async Task UpdateTask(Guid id, TaskDto taskDto)
+        public async Task UpdateTask(Guid id, CreateTaskDto taskDto)
         {
             var task = await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task is null)
             {
-                throw new Exception("Task not found");
+                throw new Exception("podane zgłoszenei nie istnieje");
             }
             _mapper.Map(taskDto, task);
             await _dbContext.SaveChangesAsync();

@@ -12,7 +12,7 @@ using ServiceDesk.Ticket.Storage;
 namespace ServiceDesk.Ticket.Storage.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    [Migration("20240712122643_init")]
+    [Migration("20240715202902_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -114,7 +114,6 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Assignee")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")

@@ -5,9 +5,9 @@ namespace ServiceDesk.Ticket.Api.Interfaces
     public interface ITicketService
     {
         Task<IEnumerable<TicketDto>> GetTickets();
-        Task<TicketDto> GetTicket(Guid id);
-        Task CreateTicket(TicketDto ticketDto);
+        Task<DetailsTicketDto> GetTicket(Guid id);
+        Task CreateTicket(CreateTicketDto ticketDto);
         Task DeleteTicket(Guid id);
-        Task UpdateTicket(Guid id, TicketDto ticketDto);
+        Task UpdateTicket(Guid id, UpdateTicketDto ticketDto);
     }
 }

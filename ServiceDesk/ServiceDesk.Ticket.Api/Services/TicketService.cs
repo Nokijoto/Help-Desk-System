@@ -18,16 +18,16 @@ namespace ServiceDesk.Ticket.Api.Services
         }
         public async Task<IEnumerable<TicketDto>> GetTickets()
         {
-            var tickets = await _dbContext.Tickets.ToListAsync();
+            var tickets = await _dbContext.Tickets.Include(x=>x.Status).Include(x=>x.Priority).ToListAsync();
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }
-        public async Task<TicketDto> GetTicket(Guid id)
+        public async Task<DetailsTicketDto> GetTicket(Guid id)
         {
             var ticket = await _dbContext.Tickets.Include(r=>r.Tasks).Include(r=>r.Notes).FirstOrDefaultAsync(t => t.Id == id);
-            return _mapper.Map<TicketDto>(ticket);
+            return _mapper.Map<DetailsTicketDto>(ticket);
         }
 
-        public async Task CreateTicket(TicketDto ticketDto)
+        public async Task CreateTicket(CreateTicketDto ticketDto)
         {
             var ticket = _mapper.Map<Storage.Entities.Ticket>(ticketDto);
             _dbContext.Tickets.Add(ticket);
@@ -40,7 +40,7 @@ namespace ServiceDesk.Ticket.Api.Services
                await _dbContext.SaveChangesAsync();
             }
         }
-        public async Task UpdateTicket(Guid id, TicketDto ticketDto)
+        public async Task UpdateTicket(Guid id, UpdateTicketDto ticketDto)
         {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket is null) {

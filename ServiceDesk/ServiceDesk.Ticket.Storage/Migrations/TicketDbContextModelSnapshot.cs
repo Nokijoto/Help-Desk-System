@@ -111,7 +111,6 @@ namespace ServiceDesk.Ticket.Storage.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Assignee")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")

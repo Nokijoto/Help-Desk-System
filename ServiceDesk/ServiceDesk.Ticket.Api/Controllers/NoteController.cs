@@ -25,9 +25,9 @@ namespace ServiceDesk.Ticket.Api.Controllers
             return await _noteService.GetNote(id);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateNote(NoteDto noteDto)
+        public async Task<IActionResult> CreateNote(Guid ticketId,CreateNoteDto noteDto)
         {
-            await _noteService.CreateNote(noteDto);
+            await _noteService.CreateNote(ticketId, noteDto);
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -36,7 +36,7 @@ namespace ServiceDesk.Ticket.Api.Controllers
             await _noteService.DeleteNote(id);
         }
         [HttpPut("{id}")]
-        public async Task UpdateNote(Guid id, NoteDto noteDto)
+        public async Task UpdateNote(Guid id, CreateNoteDto noteDto)
         {
             await _noteService.UpdateNote(id, noteDto);
         }

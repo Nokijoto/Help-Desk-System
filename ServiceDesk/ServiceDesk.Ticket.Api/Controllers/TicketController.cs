@@ -23,12 +23,12 @@ namespace ServiceDesk.Ticket.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<TicketDto> GetTicket(Guid id)
+        public async Task<DetailsTicketDto> GetTicket(Guid id)
         {
             return await _ticketService.GetTicket(id);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateTicket(TicketDto ticketDto)
+        public async Task<IActionResult> CreateTicket(CreateTicketDto ticketDto)
         {
             await _ticketService.CreateTicket(ticketDto);
             return Ok();
@@ -39,7 +39,7 @@ namespace ServiceDesk.Ticket.Api.Controllers
             await _ticketService.DeleteTicket(id);
         }
         [HttpPut("{id}")]
-        public async Task UpdateTicket(Guid id, TicketDto ticketDto)
+        public async Task UpdateTicket(Guid id, UpdateTicketDto ticketDto)
         {
             await _ticketService.UpdateTicket(id, ticketDto);
         }

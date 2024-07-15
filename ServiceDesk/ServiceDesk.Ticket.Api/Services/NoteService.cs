@@ -27,9 +27,15 @@ namespace ServiceDesk.Ticket.Api.Services
             var note = await _dbContext.Notes.FirstOrDefaultAsync(t => t.Id == id);
             return _mapper.Map<NoteDto>(note);
         }
-        public async Task CreateNote(NoteDto noteDto)
+        public async Task CreateNote(Guid ticketId,CreateNoteDto noteDto)
         {
+            var ticketExists = await _dbContext.Tickets.AnyAsync(t => t.Id == ticketId);
+            if (!ticketExists)
+            {
+                throw new InvalidOperationException("Podane zgłoszenmie nie istnieje.");
+            }
             var note = _mapper.Map<Storage.Entities.Note>(noteDto);
+            note.TicketId = ticketId;
             _dbContext.Notes.Add(note);
             await _dbContext.SaveChangesAsync();
         }
@@ -42,7 +48,7 @@ namespace ServiceDesk.Ticket.Api.Services
                 await _dbContext.SaveChangesAsync();
             }
         }
-        public async Task UpdateNote(Guid id, NoteDto noteDto)
+        public async Task UpdateNote(Guid id, CreateNoteDto noteDto)
         {
             var note = await _dbContext.Notes.FirstOrDefaultAsync(t => t.Id == id);
             if (note is null)

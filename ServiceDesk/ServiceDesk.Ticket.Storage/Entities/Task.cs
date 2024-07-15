@@ -12,7 +12,7 @@ namespace ServiceDesk.Ticket.Storage.Entities
         public string Content{ get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
 
         public Guid TicketId { get; set; }
         public Ticket Ticket { get; set; }

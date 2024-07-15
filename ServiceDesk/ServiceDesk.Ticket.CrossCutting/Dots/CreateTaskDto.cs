@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServiceDesk.Ticket.CrossCutting.Dots
 {
-    public class NoteDto
+    public class CreateTaskDto
     {
-        public Guid Id { get; set; }
         public string Content { get; set; }
-
-        
     }
 }
