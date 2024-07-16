@@ -1,6 +1,7 @@
 ﻿using Gateway.Models;
 using Gateway.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,22 +12,22 @@ namespace Gateway.Controllers
 {
     public class AuthController : Controller
     {
-       private readonly IAuthService _authService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthService _authService;
+        
 
-        public AuthController(IAuthService authService, IHttpContextAccessor httpContextAccessor)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _httpContextAccessor = httpContextAccessor;
+            
         }
-        [HttpGet("login")]
-        public IActionResult Login()
+
+        [HttpGet]
+        public IActionResult LoginView()
         {
             return View("~/Areas/Identity/Pages/Account/Login.cshtml");
         }
-
-        [HttpGet("register")]
-        public IActionResult Register()
+        [HttpGet]
+        public IActionResult RegisterView()
         {
             return View("~/Areas/Identity/Pages/Account/Register.cshtml");
         }
@@ -46,36 +47,32 @@ namespace Gateway.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             try
             {
-                var token = await _authService.LoginAsync(loginModel);
+                var token = await _authService.LoginAsync(model);
+                HttpContext.Session.SetString("JWToken", token);
 
-                // Przechowywanie tokena JWT w sesji (przykład z użyciem session storage)
-                _httpContextAccessor.HttpContext.Session.SetString("JWToken", token);
+                var user = await _authService.GetCurrentUserAsync(token);
 
-                // Sprawdzanie roli użytkownika
-                var userRoles = await _authService.GetUserRolesAsync(loginModel.Email);
-
-                if (userRoles.Contains("Customer"))
+                if (user != null)
                 {
-                    // Przekierowanie do akcji "Index" w kontrolerze "Customer", zastosowanie polityki autoryzacyjnej
-                    return RedirectToAction("Index", "Customer");
-                }
-                else if (userRoles.Contains("Administrator"))
-                {
-                    // Przekierowanie do akcji "Index" w kontrolerze "Admin", zastosowanie polityki autoryzacyjnej
-                    return RedirectToAction("Index", "Administrator");
-                }
-                else if (userRoles.Contains("ServiceMan"))
-                {
-                    // Przekierowanie do akcji "Index" w kontrolerze "Serviceman", zastosowanie polityki autoryzacyjnej
-                    return RedirectToAction("Index", "Serviceman");
+                    if (await _authService.IsInRoleAsync(user, "Customer"))
+                    {
+                        return RedirectToAction("CustomerIndex", "User");
+                    }
+                    else if (await _authService.IsInRoleAsync(user, "Administrator"))
+                    {
+                        return RedirectToAction("AdministratorIndex", "User");
+                    }
+                    else if (await _authService.IsInRoleAsync(user, "Serviceman"))
+                    {
+                        return RedirectToAction("ServicemanIndex", "User");
+                    }
                 }
 
-                // Jeśli użytkownik nie ma przypisanej żadnej roli, zwróć token JWT
-                return Ok(new { token });
+                return Unauthorized();
             }
             catch (Exception ex)
             {
@@ -87,7 +84,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Logout()
         {
             await _authService.LogoutAsync();
-            _httpContextAccessor.HttpContext.Session.Remove("JWToken");
+            HttpContext.Session.Remove("JWToken");
             return RedirectToAction("Index", "Home");
         }
     }
