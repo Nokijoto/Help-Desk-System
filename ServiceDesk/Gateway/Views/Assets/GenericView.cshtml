@@ -20,7 +20,8 @@
                         <td>@property.GetValue(item)</td>
                     }
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Guid" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Details" asp-route-type="@item.Discriminator" asp-route-id="@item.Guid" class="btn btn-info btn-sm">Details</a>
+                        
                     </td>
                 </tr>
             }
