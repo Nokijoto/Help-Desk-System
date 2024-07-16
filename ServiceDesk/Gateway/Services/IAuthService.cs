@@ -1,6 +1,7 @@
 ﻿using Gateway.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Gateway.Services
 {

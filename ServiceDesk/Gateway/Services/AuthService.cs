@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
 using Gateway.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Gateway.Services
 {
@@ -117,6 +122,31 @@ namespace Gateway.Services
             }
 
             return result;
+        }
+
+        Task<string> IAuthService.LoginAsync(LoginModel loginModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task IAuthService.LogoutAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<IdentityUser> IAuthService.GetCurrentUserAsync(string token)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<bool> IAuthService.IsInRoleAsync(IdentityUser user, string role)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<IdentityResult> IAuthService.RegisterAsync(RegisterModel registerModel)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

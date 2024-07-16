@@ -1,5 +1,6 @@
 ﻿using Gateway.Clients;
 using Gateway.Storage.Dtos;
+using System.Net.Http;
 
 namespace Gateway.Factories
 {

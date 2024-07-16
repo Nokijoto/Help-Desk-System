@@ -27,7 +27,7 @@ var logger = new LoggerConfiguration()
         connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
         sinkOptions: new MSSqlServerSinkOptions
         {
-            AutoCreateSqlTable = true,
+            AutoCreateSqlTable = false,
             TableName = "EmailLogs"
         },
         restrictedToMinimumLevel: LogEventLevel.Information
