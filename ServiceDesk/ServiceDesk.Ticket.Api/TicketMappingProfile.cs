@@ -26,7 +26,9 @@ namespace ServiceDesk.Ticket.Api
             .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.Name))
             .ForMember(dest => dest.PriorityName, opt => opt.MapFrom(src => src.Priority.Name));
 
-            CreateMap<CreateTicketDto, Storage.Entities.Ticket>().ForMember(dest => dest.StatusId, opt => opt.MapFrom<DefaultStatusResolver>()).ForMember(dest => dest.PriorityId, opt => opt.MapFrom<DefaultPriorityResolver>()); 
+            CreateMap<CreateTicketDto, Storage.Entities.Ticket>()
+                .ForMember(dest => dest.StatusId, opt => opt.MapFrom<DefaultStatusResolver>())
+                .ForMember(dest => dest.PriorityId, opt => opt.MapFrom<DefaultPriorityResolver>()); 
             CreateMap<UpdateTicketDto, Storage.Entities.Ticket>();
 
             CreateMap<CreateTaskDto, Storage.Entities.Task>();

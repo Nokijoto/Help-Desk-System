@@ -32,6 +32,7 @@ namespace ServiceDesk.Ticket.Api.Controllers
         public async Task<IActionResult> CreateTicket(CreateTicketDto ticketDto)
         {
             await _ticketService.CreateTicket(ticketDto);
+
             return Ok();
         }
         [HttpDelete("{id}")]
