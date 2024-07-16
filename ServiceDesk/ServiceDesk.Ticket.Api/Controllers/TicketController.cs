@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServiceDesk.Ticket.Api.Interfaces;
+using ServiceDesk.Ticket.Api.Services;
 using ServiceDesk.Ticket.CrossCutting.Dots;
 
 namespace ServiceDesk.Ticket.Api.Controllers
@@ -43,5 +44,17 @@ namespace ServiceDesk.Ticket.Api.Controllers
         {
             await _ticketService.UpdateTicket(id, ticketDto);
         }
+
+        [HttpPut("{id}/statusName")]
+        public async Task ChangeTicketStatus(Guid id, [FromQuery] StatusTicket statusName)
+        {
+            await _ticketService.ChangeTicketStatus(id, statusName);
+        }
+        [HttpPut("{id}/priorityName")]
+        public async Task ChangeTicketPriority(Guid id, [FromQuery] PriorityTicket priorityName)
+        {
+            await _ticketService.ChangeTicketPriority(id, priorityName);
+        }
+
     }
 }

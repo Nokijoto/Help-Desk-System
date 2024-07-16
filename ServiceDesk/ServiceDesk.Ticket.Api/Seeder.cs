@@ -34,9 +34,8 @@ namespace ServiceDesk.Ticket.Api
             return new List<Status>
             {
                 new Status { Name="New"},
-                new Status { Name="In Progress"},
+                new Status { Name="InProgress"},
                 new Status { Name="Resolved"},
-                new Status { Name="Closed"}
             };
         }
         private IEnumerable<Priority> GetPriorities()

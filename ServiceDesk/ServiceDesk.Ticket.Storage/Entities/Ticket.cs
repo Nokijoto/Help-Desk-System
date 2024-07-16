@@ -12,9 +12,9 @@ namespace ServiceDesk.Ticket.Storage.Entities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Guid StatusId { get; set; } = new Guid("CDC7622E-D4AF-43BF-0865-08DCA50CEF04");
+        public Guid StatusId { get; set; }
         public Status Status { get; set; }
-        public Guid PriorityId { get; set; } = new Guid("F101739C-1D29-4768-7F23-08DCA50CEF12");
+        public Guid PriorityId { get; set; }
         public Priority Priority { get; set; }
         public string Requester { get; set; }
         public string? Assignee { get; set; }

@@ -3,9 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.CrossCutting.Dots;
 using ServiceDesk.Ticket.Storage;
+using System.ComponentModel;
 
 namespace ServiceDesk.Ticket.Api.Services
 {
+    public enum StatusTicket
+    {
+        New,
+        InProgress,
+        Resolved,
+    }
+    public enum PriorityTicket
+    {
+        Low,
+        Medium,
+        High,
+        Urgent
+    }
+
     public class TicketService:ITicketService
     {
         private readonly TicketDbContext _dbContext;
@@ -48,7 +63,42 @@ namespace ServiceDesk.Ticket.Api.Services
             }
             _mapper.Map(ticketDto, ticket);
             await _dbContext.SaveChangesAsync();
-           
+        }
+
+        public async Task ChangeTicketStatus(Guid id, StatusTicket statusName)
+        {
+            var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            if (ticket is null) {
+                throw new Exception("Ticket not found");
+            }
+            var status= await _dbContext.Statuses.FirstOrDefaultAsync(s=>s.Name==statusName.ToString());
+            if (status is null)
+            {
+                throw new Exception("Status not found");
+            }
+            ticket.StatusId = status.Id;
+
+            _dbContext.Tickets.Update(ticket);
+
+            await _dbContext.SaveChangesAsync();
+        } 
+
+        public async Task ChangeTicketPriority(Guid id, PriorityTicket priorityName)
+        {
+            var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            if (ticket is null) {
+                throw new Exception("Ticket not found");
+            }
+            var priority= await _dbContext.Priorities.FirstOrDefaultAsync(s=>s.Name==priorityName.ToString());
+            if (priority is null)
+            {
+                throw new Exception("Priority not found");
+            }
+            ticket.PriorityId = priority.Id;
+
+            _dbContext.Tickets.Update(ticket);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

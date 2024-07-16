@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using ServiceDesk.Ticket.Api;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.Api.Services;
@@ -10,6 +12,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+    // Ustawienia dla enumów
+    c.MapType<StatusTicket>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Enum = Enum.GetNames(typeof(StatusTicket)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList()
+    });
+
+    c.MapType<PriorityTicket>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Enum = Enum.GetNames(typeof(PriorityTicket)).Select(name => new OpenApiString(name) as IOpenApiAny).ToList()
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketDbContext>(options =>
@@ -29,8 +49,10 @@ seeder.Seed();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
+
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 }
 
 app.UseHttpsRedirection();
