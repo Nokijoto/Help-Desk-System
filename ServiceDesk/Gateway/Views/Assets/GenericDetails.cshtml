@@ -1,0 +1,21 @@
+﻿@model dynamic
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                @foreach (var property in Model.GetType().GetProperties())
+                {
+                    <dt class="col-sm-3">@property.Name</dt>
+                    <dd class="col-sm-9">@property.GetValue(Model)</dd>
+                }
+            </dl>
+            <a asp-action="@Model.Discriminator" asp-controller="Assets" class="btn btn-secondary">Back to List</a>
+            <a asp-action="Edit" asp-route-type="@Model.Discriminator" asp-route-id="@Model.Guid" class="btn btn-primary btn-sm">Edit</a>
+            <a asp-action="Delete" asp-route-type="@Model.Discriminator" asp-route-id="@Model.Guid" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+</div>

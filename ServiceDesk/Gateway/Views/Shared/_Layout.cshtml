@@ -25,6 +25,54 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="assetsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Assety
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="assetsDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Computers">
+                                    <div class="container mt-5">
+                                     @*    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" width="64px" height="64px">
+                                        <g>
+                                        <rect x="8" y="12" width="48" height="32" fill="#ccc" stroke="#000" stroke-width="2" />
+                                        <rect x="10" y="14" width="44" height="28" fill="#fff" />
+                                        <rect x="22" y="44" width="20" height="4" fill="#000" />
+                                        <rect x="28" y="48" width="8" height="2" fill="#000" />
+                                        </g>
+                                    </svg> *@
+                                    </div>
+                                    Computers
+                                </a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Cables">
+                                    <div class="container mt-5">
+                                        @*    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" width="64px" height="64px">
+                                        <g>
+                                        <rect x="8" y="12" width="48" height="32" fill="#ccc" stroke="#000" stroke-width="2" />
+                                        <rect x="10" y="14" width="44" height="28" fill="#fff" />
+                                        <rect x="22" y="44" width="20" height="4" fill="#000" />
+                                        <rect x="28" y="48" width="8" height="2" fill="#000" />
+                                        </g>
+                                        </svg> *@
+                                    </div>
+                                    Cables
+                                </a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Phone">
+                                    <div class="container mt-5">
+                                        @*    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" width="64px" height="64px">
+                                        <g>
+                                        <rect x="8" y="12" width="48" height="32" fill="#ccc" stroke="#000" stroke-width="2" />
+                                        <rect x="10" y="14" width="44" height="28" fill="#fff" />
+                                        <rect x="22" y="44" width="20" height="4" fill="#000" />
+                                        <rect x="28" y="48" width="8" height="2" fill="#000" />
+                                        </g>
+                                        </svg> *@
+                                    </div>
+                                    Phones
+                                </a>
+                                @* <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Create">Add New Asset</a> *@
+                                <!-- Add more dropdown items as needed -->
+                            </div>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -45,6 +93,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> *@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

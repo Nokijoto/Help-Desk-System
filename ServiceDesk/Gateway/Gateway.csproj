@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CrudBase\CrudBase.csproj" />
+    <ProjectReference Include="..\Gateway.Storage\Gateway.Storage.csproj" />
+=======
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
@@ -29,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Auth\" />
+>>>>>>> develop
   </ItemGroup>
 
 </Project>
