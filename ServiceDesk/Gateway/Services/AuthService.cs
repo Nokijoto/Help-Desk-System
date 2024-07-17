@@ -123,30 +123,5 @@ namespace Gateway.Services
 
             return result;
         }
-
-        Task<string> IAuthService.LoginAsync(LoginModel loginModel)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        Task IAuthService.LogoutAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        Task<IdentityUser> IAuthService.GetCurrentUserAsync(string token)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        Task<bool> IAuthService.IsInRoleAsync(IdentityUser user, string role)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        Task<IdentityResult> IAuthService.RegisterAsync(RegisterModel registerModel)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
