@@ -57,15 +57,64 @@ namespace Gateway.Controllers
             return View("GenericView", items);
 
         }
+        [HttpGet]
+        public async Task<IActionResult> Device()
+        {
+            var Client = _assetClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Rack()
+        {
+            var Client = _assetClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
 
+        [HttpGet]
+        public async Task<IActionResult> PDU()
+        {
+            var Client = _assetClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Printer()
+        {
+            var Client = _assetClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Monitor()
+        {
+            var Client = _assetClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Simcard()
+        {
+            var Client = _assetClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
-
+        [HttpGet]
+        public async Task<IActionResult> Software()
+        {
+            var Client = _assetClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+            var items = await Client.GetAllAsync();
+            return View("GenericView", items);
+        }
 
 
         [HttpGet]
