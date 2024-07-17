@@ -41,12 +41,13 @@ namespace Gateway.Controllers
             try
             {
                 await _authService.RegisterAsync(registerModel);
-                return Ok();
+                return RedirectToAction("LoginView");
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
+            
         }
 
         [HttpPost("login")]

@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Auth\**" />
+    <Content Remove="Views\Auth\**" />
+    <EmbeddedResource Remove="Views\Auth\**" />
+    <None Remove="Views\Auth\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
@@ -29,10 +36,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CrudBase\CrudBase.csproj" />
     <ProjectReference Include="..\Gateway.Storage\Gateway.Storage.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Auth\" />
   </ItemGroup>
 
 </Project>

@@ -15,13 +15,13 @@ namespace ServiceDesk.Ticket.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetElement(Guid id)
         {
-            var elements = await _elementService.GetElement(id);
+            var elements = await _elementService.GetAssetsForTicket(id);
             return Ok(elements);
         }
         [HttpPost]
-        public async Task<IActionResult> AddElements(Guid id, Guid assetId) //do poprwy
+        public async Task<IActionResult> AddElements(Guid id, string assetId) //do poprwy
         {
-            _elementService.AddElements(id, assetId);
+            await _elementService.AddElements(id, assetId);
             return Ok();
         }
         [HttpDelete("{id}")]
