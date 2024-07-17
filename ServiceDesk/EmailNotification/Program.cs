@@ -18,27 +18,27 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailService, MailService>();
-var logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.MSSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
-        sinkOptions: new MSSqlServerSinkOptions
-        {
-            AutoCreateSqlTable = false,
-            TableName = "EmailLogs"
-        },
-        restrictedToMinimumLevel: LogEventLevel.Information
-    )
-    .CreateLogger();
+//var logger = new LoggerConfiguration()
+//    .MinimumLevel.Information()
+//    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+//    .Enrich.FromLogContext()
+//    .WriteTo.Console()
+//    .WriteTo.MSSqlServer(
+//        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+//        sinkOptions: new MSSqlServerSinkOptions
+//        {
+//            AutoCreateSqlTable = true,
+//            TableName = "EmailLogs"
+//        },
+//        restrictedToMinimumLevel: LogEventLevel.Information
+//    )
+//    .CreateLogger();
 
-builder.Services.AddSingleton<Serilog.ILogger>(logger);
+//builder.Services.AddSingleton<Serilog.ILogger>(logger);
 
 // Add the logger to the services
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+//builder.Logging.ClearProviders();
+//builder.Logging.AddSerilog(logger);
 
 // Configure EF Core with SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>

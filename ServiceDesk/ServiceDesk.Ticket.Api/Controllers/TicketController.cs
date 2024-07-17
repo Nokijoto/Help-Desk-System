@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EmailNotification.Models;
+using EmailNotification.Services;
 using Microsoft.AspNetCore.Mvc;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.Api.Services;
@@ -11,10 +13,12 @@ namespace ServiceDesk.Ticket.Api.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
+        private readonly IMailService _mailService;
         
-        public TicketController(ITicketService ticketService)
+        public TicketController(ITicketService ticketService, IMailService mailService)
         {
             _ticketService=ticketService;
+            _mailService = mailService;
             
         }
         [HttpGet]
@@ -40,6 +44,7 @@ namespace ServiceDesk.Ticket.Api.Controllers
         {
             await _ticketService.DeleteTicket(id);
         }
+
         [HttpPut("{id}")]
         public async Task UpdateTicket(Guid id, UpdateTicketDto ticketDto)
         {
@@ -47,14 +52,21 @@ namespace ServiceDesk.Ticket.Api.Controllers
         }
 
         [HttpPut("{id}/statusName")]
-        public async Task ChangeTicketStatus(Guid id, [FromQuery] StatusTicket statusName)
+        public async Task ChangeTicketStatus(Guid id, [FromQuery] StatusTicket statusName, MailData mailData)
         {
-            await _ticketService.ChangeTicketStatus(id, statusName);
+            await _ticketService.ChangeTicketStatus(id, statusName, mailData);
         }
+
         [HttpPut("{id}/priorityName")]
         public async Task ChangeTicketPriority(Guid id, [FromQuery] PriorityTicket priorityName)
         {
             await _ticketService.ChangeTicketPriority(id, priorityName);
+        }
+
+        [HttpPut("{id}/assignee")]
+        public async Task ChangeTicketAssignee(Guid id, [FromQuery] string assignee)
+        {
+            await _ticketService.ChangeTicketAssignee(id, assignee);
         }
 
     }

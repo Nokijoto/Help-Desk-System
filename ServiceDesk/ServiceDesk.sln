@@ -22,6 +22,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Ticket.CrossCutting", "ServiceDesk.Ticket.CrossCutting\ServiceDesk.Ticket.CrossCutting.csproj", "{E0CB5B68-B28D-47B7-AAA0-96A53365CACF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDesk.Ticket.Storage", "ServiceDesk.Ticket.Storage\ServiceDesk.Ticket.Storage.csproj", "{992C053E-77C2-4707-8F1A-5BEDDCDC18B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55F2E7A0-1244-444B-8AC5-1224A1A86BE2} = {55F2E7A0-1244-444B-8AC5-1224A1A86BE2}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.csproj", "{21D8F529-6DEB-42FE-B2DF-674F51D19A1E}"
 EndProject
@@ -80,7 +83,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {8B4AFCAE-49ED-4C0C-B9E4-BB293418E82E}
 		SolutionGuid = {A2081E83-70AC-47E7-82C6-73C34B1E0099}
+		        SolutionGuid = {8B4AFCAE-49ED-4C0C-B9E4-BB293418E82E}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,11 @@
+using EmailNotification.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
+using Serilog;
+using ServiceDesk.Assets.Storage;
 using ServiceDesk.Ticket.Api;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.Api.Services;
@@ -32,6 +37,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AssetsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Assetsconnection")));
 builder.Services.AddDbContext<TicketDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),sqlOptions => sqlOptions.MigrationsAssembly("ServiceDesk.Ticket.Storage")));
 builder.Services.AddAutoMapper(typeof(TicketMappingProfile).Assembly);
@@ -39,6 +46,8 @@ builder.Services.AddScoped<Seeder>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IElementService, ElementService>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 var app = builder.Build();
 

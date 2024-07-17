@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EmailNotification.Models;
+using EmailNotification.Services;
 using Microsoft.EntityFrameworkCore;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.CrossCutting.Dots;
@@ -25,11 +27,13 @@ namespace ServiceDesk.Ticket.Api.Services
     {
         private readonly TicketDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IMailService _mailService;
 
-        public TicketService(TicketDbContext dbContext, IMapper mapper)
+        public TicketService(TicketDbContext dbContext, IMapper mapper, IMailService mailService)
         {
             _dbContext = dbContext;
             _mapper=mapper;
+            _mailService = mailService;
         }
         public async Task<IEnumerable<TicketDto>> GetTickets()
         {
@@ -65,12 +69,18 @@ namespace ServiceDesk.Ticket.Api.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ChangeTicketStatus(Guid id, StatusTicket statusName)
+        public async Task ChangeTicketStatus(Guid id, StatusTicket statusName, MailData mailData)
         {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket is null) {
                 throw new Exception("Ticket not found");
             }
+            //if (statusName == StatusTicket.Resolved)
+            //{
+            //    var template="ticketClosed";
+            //    await _mailService.SendMailAsync(mailData, template);
+            //}
+            
             var status= await _dbContext.Statuses.FirstOrDefaultAsync(s=>s.Name==statusName.ToString());
             if (status is null)
             {
@@ -95,6 +105,20 @@ namespace ServiceDesk.Ticket.Api.Services
                 throw new Exception("Priority not found");
             }
             ticket.PriorityId = priority.Id;
+
+            _dbContext.Tickets.Update(ticket);
+
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task ChangeTicketAssignee(Guid id, string assignee)
+        {
+            var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            if (ticket is null)
+            {
+                throw new Exception("Ticket not found");
+            }
+
+            ticket.Assignee = assignee;
 
             _dbContext.Tickets.Update(ticket);
 

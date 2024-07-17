@@ -35,7 +35,8 @@ namespace ServiceDesk.Ticket.Api
 
             CreateMap<CreateNoteDto, Storage.Entities.Note>();
 
-
+            CreateMap<ElementDto, Storage.Entities.Element>();
+            CreateMap<Storage.Entities.Element, ElementDto>();
 
         }
     }

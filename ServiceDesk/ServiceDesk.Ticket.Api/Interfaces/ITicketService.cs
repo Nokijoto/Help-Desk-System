@@ -1,4 +1,5 @@
-﻿using ServiceDesk.Ticket.Api.Services;
+﻿using EmailNotification.Models;
+using ServiceDesk.Ticket.Api.Services;
 using ServiceDesk.Ticket.CrossCutting.Dots;
 
 namespace ServiceDesk.Ticket.Api.Interfaces
@@ -10,7 +11,8 @@ namespace ServiceDesk.Ticket.Api.Interfaces
         Task CreateTicket(CreateTicketDto ticketDto);
         Task DeleteTicket(Guid id);
         Task UpdateTicket(Guid id, UpdateTicketDto ticketDto);
-        Task ChangeTicketStatus(Guid id, StatusTicket statusName);
+        Task ChangeTicketStatus(Guid id, StatusTicket statusName, MailData mailData);
         Task ChangeTicketPriority(Guid id, PriorityTicket priorityName);
+        Task ChangeTicketAssignee(Guid id, string assignee);
     }
 }

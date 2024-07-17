@@ -8,12 +8,12 @@ namespace EmailNotification.Services
     public class MailService : IMailService
     {
         private readonly MailSettings _mailSettings;
-        private readonly Serilog.ILogger _logger;
+        //private readonly Serilog.ILogger _logger;
 
-        public MailService(IOptions<MailSettings> options, Serilog.ILogger logger)
+        public MailService(IOptions<MailSettings> options)
         {
             _mailSettings = options.Value;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public bool SendMail(MailData mailData, string Template)
@@ -53,16 +53,16 @@ namespace EmailNotification.Services
                 }
 
                 // Log the successful email send
-                _logger.Information("Email sent successfully: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
-                    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, true);
+                //_logger.Information("Email sent successfully: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
+                //    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, true);
 
                 return true;
             }
             catch (Exception ex)
             {
                 // Log the failed email send
-                _logger.Error(ex, "Failed to send email: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
-                    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, false);
+                //_logger.Error(ex, "Failed to send email: {EmailTo}, {Subject}, {Body}, {SentAt}, {Success}",
+                //    mailData.EmailToId, mailData.EmailSubject, mailData.EmailBody, DateTime.UtcNow, false);
 
                 return false;
             }
