@@ -10,6 +10,7 @@ using ServiceDesk.Ticket.Api;
 using ServiceDesk.Ticket.Api.Interfaces;
 using ServiceDesk.Ticket.Api.Services;
 using ServiceDesk.Ticket.Storage;
+using EmailNotification.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IElementService, ElementService>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 var app = builder.Build();
 

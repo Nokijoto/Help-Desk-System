@@ -10,7 +10,7 @@ namespace EmailNotification
         {
         }
 
-        //public DbSet<EmailLog> EmailLogs { get; set; }
+        public DbSet<EmailLog> EmailLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

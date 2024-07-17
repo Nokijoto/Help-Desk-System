@@ -51,6 +51,8 @@ namespace ServiceDesk.Ticket.Api.Services
             var ticket = _mapper.Map<Storage.Entities.Ticket>(ticketDto);
             _dbContext.Tickets.Add(ticket);
             await _dbContext.SaveChangesAsync();
+
+           
         }
         public async Task DeleteTicket(Guid id) {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
@@ -75,11 +77,7 @@ namespace ServiceDesk.Ticket.Api.Services
             if (ticket is null) {
                 throw new Exception("Ticket not found");
             }
-            //if (statusName == StatusTicket.Resolved)
-            //{
-            //    var template="ticketClosed";
-            //    await _mailService.SendMailAsync(mailData, template);
-            //}
+            
             
             var status= await _dbContext.Statuses.FirstOrDefaultAsync(s=>s.Name==statusName.ToString());
             if (status is null)
@@ -91,6 +89,11 @@ namespace ServiceDesk.Ticket.Api.Services
             _dbContext.Tickets.Update(ticket);
 
             await _dbContext.SaveChangesAsync();
+
+            if (statusName == StatusTicket.Resolved)
+            {
+                _mailService.SendMail(mailData, "ticketClosed");
+            }
         } 
 
         public async Task ChangeTicketPriority(Guid id, PriorityTicket priorityName)
