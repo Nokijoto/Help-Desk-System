@@ -1,0 +1,36 @@
+﻿@model Gateway.Models.ChangeRoleViewModel
+
+@{
+    ViewBag.Title = "Zmiana Roli";
+}
+
+<h2>Zmień rolę</h2>
+
+<h4>@Model.User.UserName (@Model.User.Email)</h4>
+
+<form asp-action="ChangeRole">
+    <div class="form-group">
+        <label asp-for="User.UserName" class="control-label"></label>
+        <input asp-for="User.UserName" class="form-control" disabled />
+    </div>
+    <div class="form-group">
+        <label asp-for="SelectedRole" class="control-label">Rola</label>
+        @{
+            var roleItems = new List<SelectListItem>
+        {
+        new SelectListItem { Value = "Administrator", Text = "Administrator" },
+        new SelectListItem { Value = "Customer", Text = "Klient" },
+        new SelectListItem { Value = "Serviceman", Text = "Serwisant" }
+        };
+        }
+        <select asp-for="SelectedRole" class="form-control" asp-items="roleItems"></select>
+    </div>
+    <input type="hidden" asp-for="User.Id" />
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="AdministratorIndex">Powrót do listy</a>
+</div>
