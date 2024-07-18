@@ -60,5 +60,14 @@ namespace Gateway.Clients
             var response = await _httpClient.DeleteAsync($"{_endpoint}{id}");
             response.EnsureSuccessStatusCode();
         }
+        public async Task<IEnumerable<TDto>> GetAllAsyncTicket()
+        {
+            var response = await _httpClient.GetAsync($"{_endpoint}");
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<IEnumerable<TDto>>(content);
+            return result;
+        }
     }
 }

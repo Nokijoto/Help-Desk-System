@@ -9,17 +9,20 @@ namespace Gateway.Controllers
     public class TicketController : Controller
     {
         private readonly IAssetClientFactory _assetClientFactory;
-        private readonly String serviceUrl = "http://localhost:5183/Mail";
+        private readonly String mailUrl = "http://localhost:5183/Mail";
+        private readonly String serviceUrl = "https://localhost:7061/api/Ticket";
         public TicketController(IAssetClientFactory assetClientFactory)
         {
             _assetClientFactory = assetClientFactory;
 
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            CreateTicket();
-            return View();
+            var Client = _assetClientFactory.CreateClient<TicketDto>($"{serviceUrl}");
+            var items = await Client.GetAllAsyncTicket();
+            return View(items);
+            
         }
         [HttpPost]
         public async Task CreateTicket()

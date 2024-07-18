@@ -1,7 +1,31 @@
-﻿
+﻿@model IEnumerable<Gateway.Storage.Dtos.TicketDto>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ticket List";
 }
 
-<h1>Index</h1>
+<h2>Ticket List</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Requester</th>
+            <th>Assignee</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Title</td>
+                <td>@ticket.StatusName</td>
+                <td>@ticket.PriorityName</td>
+                <td>@ticket.Requester</td>
+                <td>@ticket.Assignee</td>
+            </tr>
+        }
+    </tbody>
+</table>
