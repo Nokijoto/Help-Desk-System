@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +7,29 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Gateway.styles.css" asp-append-version="true" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container-fluid, .container {
+            flex: 1;
+        }
+
+        .footer {
+            flex-shrink: 0;
+        }
+    </style>
 </head>
-<body>
+<body class="@ViewData["BodyClass"]">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -22,11 +43,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Prywatność</a>
+                       
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AdministratorIndex">Lista użytkowników</a>
-                        </li>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Index">Zgłoszenia</a>
@@ -37,75 +56,72 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="assetsDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Computers">
-                                    <div class="container mt-5">
-                                     @*    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" width="64px" height="64px">
-                                        <g>
-                                        <rect x="8" y="12" width="48" height="32" fill="#ccc" stroke="#000" stroke-width="2" />
-                                        <rect x="10" y="14" width="44" height="28" fill="#fff" />
-                                        <rect x="22" y="44" width="20" height="4" fill="#000" />
-                                        <rect x="28" y="48" width="8" height="2" fill="#000" />
-                                        </g>
-                                    </svg> *@
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-laptop" viewBox="0 0 16 16">
+                                        <path d="M12 5H4a1 1 0 0 0-1 1v4h10V6a1 1 0 0 0-1-1z" />
+                                        <path d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 .5.5V12H2v-.5z" />
+                                        <path fill-rule="evenodd" d="M5.5 12.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v.5H5v-.5zM2 3h12a2 2 0 0 1 2 2v6h-1v-.5a1.5 1.5 0 0 0-1.5-1.5H2A1.5 1.5 0 0 0 .5 10.5v.5H0V5a2 2 0 0 1 2-2z" />
+                                    </svg>
                                     Komputery
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Cables">
-                                    <div class="container mt-5">
-                                        @*    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" width="64px" height="64px">
-                                        <g>
-                                        <rect x="8" y="12" width="48" height="32" fill="#ccc" stroke="#000" stroke-width="2" />
-                                        <rect x="10" y="14" width="44" height="28" fill="#fff" />
-                                        <rect x="22" y="44" width="20" height="4" fill="#000" />
-                                        <rect x="28" y="48" width="8" height="2" fill="#000" />
-                                        </g>
-                                        </svg> *@
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-usb" viewBox="0 0 16 16">
+                                        <path d="M2.25 7.5H3v-3H2.25a.75.75 0 1 0 0 1.5H1v3h1.25a.75.75 0 1 0 0-1.5H3v3h-.75a.75.75 0 1 0 0 1.5H3V13H1.5v1.25a.75.75 0 1 0 1.5 0v-.75H5v.75a.75.75 0 1 0 1.5 0V13H5v-1.5H3.75a.75.75 0 0 0 0 1.5H4v-3H2.75a.75.75 0 0 0 0-1.5H3v-3H2.25a.75.75 0 0 0 0 1.5z" />
+                                        <path fill-rule="evenodd" d="M5.5 4.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v6H5.5v-6zM5 1.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V4h-6V1.5z" />
+                                        <path d="M7.5 2h1v2h-1V2z" />
+                                    </svg>
                                     Kable
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Phone">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                                        <path d="M3 1h10a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                                        <path d="M11 12.5H5v.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-.5zm0-11H5v.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-.5z" />
+                                    </svg>
                                     Telefony
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Device">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-display" viewBox="0 0 16 16">
+                                        <path d="M1 2.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H9v1h1a.5.5 0 0 1 0 1H6a.5.5 0 0 1 0-1h1v-1H1.5a.5.5 0 0 1-.5-.5v-9zm1 .5v8h11v-8H2z" />
+                                    </svg>
                                     Urządzenia
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Rack">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-server" viewBox="0 0 16 16">
+                                        <path d="M1 6h14V5H1v1zM0 4.5A.5.5 0 0 1 .5 4h15a.5.5 0 0 1 .5.5V6h-16V4.5zm1 7h14v-1H1v1zM0 11.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 .5.5V13h-16v-1.5zM1 12h14V9H1v3z" />
+                                    </svg>
                                     Szafy rakowe
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="PDU">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plug" viewBox="0 0 16 16">
+                                        <path d="M2 9a1 1 0 0 1 1 1v5h10v-5a1 1 0 1 1 2 0v5.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5V10a1 1 0 0 1 1-1zm8.5 1V7.5a.5.5 0 0 0-1 0V10H6.5V7.5a.5.5 0 0 0-1 0V10h-1V7a1 1 0 1 1 2 0v2h4V7a1 1 0 1 1 2 0v3h-1zm-8-3h2V2.5a1.5 1.5 0 0 0-3 0V7zm10 0V2.5a1.5 1.5 0 0 0-3 0V7h2zm-5 0V2.5a1.5 1.5 0 0 0-3 0V7h2z" />
+                                    </svg>
                                     Listwy zasilające
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Printer">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                                        <path d="M2 2v3H1.5A1.5 1.5 0 0 0 0 6.5v5A1.5 1.5 0 0 0 1.5 13H2v3h12v-3h.5a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 14.5 5H14V2H2zm10 3V2h2v3h-2zM2 5V2h2v3H2zm10 6H4V9h8v2z" />
+                                    </svg>
                                     Drukarki
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Monitor">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-display" viewBox="0 0 16 16">
+                                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v9A1.5 1.5 0 0 1 14.5 12h-5v2h1a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h1v-2h-5A1.5 1.5 0 0 1 0 10.5v-9zM2 1a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5H2z" />
+                                    </svg>
                                     Monitory
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Simcard">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sim" viewBox="0 0 16 16">
+                                        <path d="M3 2.5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1V6H3V2.5zM2.5 6V2.5A2.5 2.5 0 0 1 5 0h6a2.5 2.5 0 0 1 2.5 2.5V6H14v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6h.5z" />
+                                    </svg>
                                     Karty SIM
                                 </a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Software">
-                                    <div class="container mt-5">
-                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cpu" viewBox="0 0 16 16">
+                                        <path d="M5 0a1 1 0 0 0-1 1v2H2a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-1-1H5zm0 3v2h6V3H5zm7 4v2H4V7h8z" />
+                                    </svg>
                                     Oprogramowanie
                                 </a>
-
-                                @* <a class="dropdown-item" asp-area="" asp-controller="Assets" asp-action="Create">Add New Asset</a> *@
-                                <!-- Add more dropdown items as needed -->
                             </div>
+
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -119,7 +135,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-white">
         <div class="container">
             &copy; 2024 - Brama - <a asp-area="" asp-controller="Home" asp-action="Privacy">Prywatność</a>
         </div>
@@ -128,7 +144,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> *@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -21,7 +21,7 @@ namespace Gateway.Controllers
         {
             var Client = _assetClientFactory.CreateClient<TicketDto>($"{serviceUrl}");
             var items = await Client.GetAllAsyncTicket();
-            return View(items);
+            return View("../Assets/GenericView", items);
             
         }
         [HttpPost]
