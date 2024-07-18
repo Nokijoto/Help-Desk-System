@@ -1,3 +1,4 @@
+/* Reset podstawowych stylów dla body */
 html, body {
     height: 100%;
     margin: 0;
@@ -5,6 +6,7 @@ html, body {
     flex-direction: column;
 }
 
+/* Stylizacja ogólna dla body */
 body {
     display: flex;
     flex-direction: column;
@@ -12,20 +14,24 @@ body {
     color: black;
 }
 
+/* Kontener zajmuj¹cy ca³¹ wysokoœæ */
 .container-fluid, .container {
     flex: 1;
 }
 
+/* Stopka */
 .footer {
     flex-shrink: 0;
 }
 
+/* Stylizacja strony indeksowej */
 body.index-page {
     background: url('https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
     background-size: cover;
     color: white;
 }
 
+/* Sekcja hero i karta na stronie indeksowej */
 .index-page .hero-section,
 .index-page .card-body {
     background: rgba(255, 255, 255, 0.4);
@@ -35,19 +41,21 @@ body.index-page {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Sekcja hero na stronie indeksowej */
 .index-page .hero-section {
     margin-top: 100px;
     padding: 50px 0;
 }
 
-    .index-page .hero-section h1 {
-        font-size: 4rem;
-    }
+.index-page .hero-section h1 {
+    font-size: 4rem;
+}
 
-    .index-page .hero-section p {
-        font-size: 1.5rem;
-    }
+.index-page .hero-section p {
+    font-size: 1.5rem;
+}
 
+/* Karta na stronie indeksowej */
 .index-page .card-body {
     padding: 20px;
 }
@@ -77,6 +85,96 @@ body.index-page {
     margin-top: 10px;
 }
 
-.t-b {
-    color: black;
+/* Stylizacja tabel */
+.table-container {
+    overflow-x: auto; /* Pozwala na przewijanie poziome, jeœli tabela jest zbyt szeroka */
+    margin-left: 0; /* Wyrównanie tabeli do lewej */
+    padding: 0; /* Dostosowanie paddingu, jeœli potrzebne */
+}
+
+.table {
+    width: auto; /* Zapewnia, ¿e tabela zajmuje tylko tyle szerokoœci, ile potrzebuje */
+    min-width: 100%; /* Zapewnia, ¿e tabela nie zmniejsza siê za bardzo */
+}
+
+/* Maksymalna szerokoœæ dla lepszej responsywnoœci */
+.table {
+    max-width: 100%; /* Umo¿liwia responsywnoœæ tabeli */
+}
+
+/* Stylizacja komórek tabeli */
+.table td, .table th {
+    white-space: nowrap; /* Zapobiega ³amaniu tekstu w komórkach */
+    text-overflow: ellipsis; /* Dodaje elipsê, jeœli zawartoœæ jest za d³uga */
+    overflow: hidden; /* Ukrywa zawartoœæ, która wychodzi poza komórkê */
+}
+
+/* Nowe style dla formularza */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 0.5rem; /* Zaokr¹glenie rogów karty */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cieñ dla karty */
+}
+
+.card-body {
+    padding: 2rem; /* Przestrzeñ wewnêtrzna karty */
+}
+
+.form-label {
+    font-weight: 500; /* Waga czcionki dla etykiet formularza */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Kolor t³a przycisku */
+    border-color: #007bff; /* Kolor obramowania przycisku */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Kolor t³a przycisku po najechaniu */
+    border-color: #004085; /* Kolor obramowania przycisku po najechaniu */
+}
+
+/* Stylizacja strony b³êdu */
+.error-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    margin: 1rem auto;
+}
+
+.error-header {
+    color: #dc3545;
+    text-align: center;
+}
+
+.error-card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-card-body {
+    padding: 2rem;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.alert-info strong {
+    color: #0c5460;
 }

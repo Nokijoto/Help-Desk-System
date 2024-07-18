@@ -4,19 +4,19 @@ using System.Net.Http;
 
 namespace Gateway.Factories
 {
-    public class AssetClientFactory : IAssetClientFactory
+    public class ApiClientFactory : IApiClientFactory
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public AssetClientFactory(IHttpClientFactory httpClientFactory)
+        public ApiClientFactory(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public AssetClient<TDto> CreateClient<TDto>(string endpoint) where TDto : class
+        public ApiClient<TDto> CreateClient<TDto>(string endpoint) where TDto : class
         {
             var httpClient = _httpClientFactory.CreateClient();
-            return new AssetClient<TDto>(httpClient, endpoint);
+            return new ApiClient<TDto>(httpClient, endpoint);
         }
     }
 

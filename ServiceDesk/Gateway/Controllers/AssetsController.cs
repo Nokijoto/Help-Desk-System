@@ -14,11 +14,11 @@ namespace Gateway.Controllers
 {
     public class AssetsController : Controller
     {
-        private readonly IAssetClientFactory _assetClientFactory;
+        private readonly IApiClientFactory _ClientFactory;
         private readonly String serviceUrl = "http://localhost:5256/api/";
-        public AssetsController(IAssetClientFactory assetClientFactory)
+        public AssetsController(IApiClientFactory ClientFactory)
         {
-            _assetClientFactory = assetClientFactory;
+            _ClientFactory = ClientFactory;
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Computers()
         {
-            var Client = _assetClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+            var Client = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
          
@@ -42,7 +42,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Cables()
         {
 
-            var Client = _assetClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+            var Client = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
 
@@ -52,7 +52,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Phone()
         {
 
-            var Client = _assetClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+            var Client = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
 
@@ -60,7 +60,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Device()
         {
-            var Client = _assetClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+            var Client = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -68,7 +68,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Rack()
         {
-            var Client = _assetClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+            var Client = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -77,7 +77,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> PDU()
         {
-            var Client = _assetClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+            var Client = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -86,7 +86,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Printer()
         {
-            var Client = _assetClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+            var Client = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -95,7 +95,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Monitor()
         {
-            var Client = _assetClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+            var Client = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -103,7 +103,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Simcard()
         {
-            var Client = _assetClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+            var Client = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -111,7 +111,7 @@ namespace Gateway.Controllers
         [HttpGet]
         public async Task<IActionResult> Software()
         {
-            var Client = _assetClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+            var Client = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -136,10 +136,10 @@ namespace Gateway.Controllers
             switch (type.ToLower())
             {
                 case "computer":
-                    var computerClient = _assetClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+                    var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
                     return await computerClient.GetByIdAsync(id);
                 case "cable":
-                    var cableClient = _assetClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+                    var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                     return await cableClient.GetByIdAsync(id);
                 default:
                     return null;
@@ -207,14 +207,14 @@ namespace Gateway.Controllers
                     case "computerdto":
                         var computerDto = new ComputerDto();
                         MapDynamicToDto(model, computerDto);
-                        var computerClient = _assetClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+                        var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
                         await computerClient.UpdateAsync((Guid)model.Guid, computerDto);
                         return true;
 
                     case "cabledto":
                         var cableDto = new CableDto();
                         MapDynamicToDto(model, cableDto);
-                        var cableClient = _assetClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+                        var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                         await cableClient.UpdateAsync((Guid)model.Guid, cableDto);
                         return true;
 
@@ -277,11 +277,11 @@ namespace Gateway.Controllers
             switch (type.ToLower())
             {
                 case "computerdto":
-                    var computerClient = _assetClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+                    var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
                     await computerClient.DeleteAsync(id);
                     return true;
                 case "cabledto":
-                    var cableClient = _assetClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+                    var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                     await cableClient.DeleteAsync(id);
                     return true;
                 default:

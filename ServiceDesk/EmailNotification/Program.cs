@@ -12,12 +12,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailService, MailService>();
+
+
+
 var logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -34,19 +40,23 @@ var logger = new LoggerConfiguration()
     )
     .CreateLogger();
 
-builder.Services.AddSingleton<Serilog.ILogger>(logger);
-
 //Add the logger to the services
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
 // Configure EF Core with SQL Server
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+builder.Services.AddSingleton<Serilog.ILogger>(logger);
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// TODO: DELETE THIS BEFORE
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

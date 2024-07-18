@@ -26,7 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<UserService>();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IAssetClientFactory, AssetClientFactory>();
+builder.Services.AddSingleton<IApiClientFactory, ApiClientFactory>();
 // Uncomment and configure this line if AssetClient<TDto> is needed
 //builder.Services.AddHttpClient<AssetClient<TDto>>(client =>
 //{

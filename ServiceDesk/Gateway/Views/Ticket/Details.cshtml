@@ -1,0 +1,77 @@
+﻿@model Gateway.Storage.Dtos.DetailsTicketDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DetailsTicketDto</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriorityName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriorityName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Requester)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Requester)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Assignee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Assignee)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>Tasks</h4>
+    <ul>
+        @foreach (var task in Model.Tasks)
+        {
+            <li>
+                <input type="checkbox"/>
+                @Html.DisplayFor(modelItem => task.Content)
+            </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h4>Notes</h4>
+    <ul>
+        @foreach (var note in Model.Notes)
+        {
+            <li>@Html.DisplayFor(modelItem => note.Content)</li>
+        }
+    </ul>
+</div>
+<div>
+    <a asp-action="ChangeStatus" asp-route-id="@Model?.Id">Change status</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

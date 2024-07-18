@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel;
 namespace Gateway.Storage.Dtos
 {
     public class PhoneDto : AssetDto
     {
-        public string? PhoneNumber { get; set; }
-        public string? Carrier { get; set; }
-        public string? OperatingSystem { get; set; }
-        public int StorageSize { get; set; }
-        public bool IsSmartphone { get; set; }
-        public string? IMEI { get; set; }
+        [DisplayName("Numer Telefonu")]
+    public string? PhoneNumber { get; set; }
+
+    [DisplayName("Operator")]
+    public string? Carrier { get; set; }
+
+    [DisplayName("System Operacyjny")]
+    public string? OperatingSystem { get; set; }
+
+    [DisplayName("Pojemność Pamięci")]
+    public int StorageSize { get; set; }
+
+    [DisplayName("Smartfon")]
+    public bool IsSmartphone { get; set; }
+
+    [DisplayName("IMEI")]
+    public string? IMEI { get; set; }
     }
 }
