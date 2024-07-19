@@ -11,8 +11,8 @@ namespace ServiceDesk.Ticket.Api.Interfaces
         Task CreateTicket(CreateTicketDto ticketDto);
         Task DeleteTicket(Guid id);
         Task UpdateTicket(Guid id, UpdateTicketDto ticketDto);
-        Task ChangeTicketStatus(Guid id, StatusTicket statusName, MailData mailData);
-        Task ChangeTicketPriority(Guid id, PriorityTicket priorityName);
-        Task ChangeTicketAssignee(Guid id, string assignee);
+        Task ChangeTicketStatus(Guid id, StatusDto statusName);
+        Task ChangeTicketPriority(Guid id, PriorityDto priorityName);
+        Task ChangeTicketAssignee(Guid id, UpdateAssigneeDto assignee);
     }
 }

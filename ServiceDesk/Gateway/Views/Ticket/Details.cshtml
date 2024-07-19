@@ -71,7 +71,9 @@
     </ul>
 </div>
 <div>
+    <a asp-action="EditAssignee" asp-route-id="@Model?.Id">Change Assignee</a> |
     <a asp-action="ChangeStatus" asp-route-id="@Model?.Id">Change status</a> |
+    <a asp-action="ChangePriority" asp-route-id="@Model?.Id">Change Priority</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gateway.Storage.Dtos
+namespace ServiceDesk.Ticket.CrossCutting.Dots
 {
-    public class StatusTicketDto
+    public class UpdateAssigneeDto
     {
-        public string Name { get; set; }
+        public string Assignee { get; set; }
     }
 }

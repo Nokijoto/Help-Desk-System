@@ -64,7 +64,7 @@ namespace Gateway.Controllers
         {
             var Client = _ClientFactory.CreateClient<CreateTicketDto>($"{serviceUrl}");
             await Client.AddAsync(ticketDto);
-            await CreateTicket();
+            //await CreateTicket();
             return RedirectToAction("Index");
         }
 
@@ -94,10 +94,43 @@ namespace Gateway.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeStatus(Guid id, StatusTicketDto statusName)
         {
-            var Client = _ClientFactory.CreateClient<StatusTicketDto>($"{serviceUrl}/{id}");
-            await Client.UpdateAsynckk(id, statusName);
+            var Client = _ClientFactory.CreateClient<StatusTicketDto>($"{serviceUrl}");
+            await Client.UpdateStatusAsync(id, statusName);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAssignee([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<UpdateAssignee>($"{serviceUrl}");
+            var item = await Client.GetByIdAsyncTicket(id);
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAssignee([FromRoute] Guid id, UpdateAssignee ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<UpdateAssignee>($"{serviceUrl}");
+            await Client.UpdateAssigneeAsync(id, ticketDto);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePriority([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<PriorityTicketDto>($"{serviceUrl}");
+            var item = await Client.GetByIdAsyncTicket(id);
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePriority([FromRoute] Guid id, PriorityTicketDto ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<PriorityTicketDto>($"{serviceUrl}");
+            await Client.UpdatePriorityAsync(id, ticketDto);
+            return RedirectToAction("Index");
+        }
+
 
         [HttpPost]
         public async Task CreateTicket()

@@ -71,49 +71,41 @@ namespace ServiceDesk.Ticket.Api.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ChangeTicketStatus(Guid id, StatusTicket statusName, MailData mailData)
+        public async Task ChangeTicketStatus(Guid id, StatusDto statusName)
         {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket is null) {
                 throw new Exception("Ticket not found");
             }
-            
-            
-            var status= await _dbContext.Statuses.FirstOrDefaultAsync(s=>s.Name==statusName.ToString());
-            if (status is null)
-            {
+
+            var status = await _dbContext.Statuses.FirstOrDefaultAsync(s => s.Name == statusName.Name);
+
+            if (status is null) {
                 throw new Exception("Status not found");
             }
+
             ticket.StatusId = status.Id;
-
-            _dbContext.Tickets.Update(ticket);
-
             await _dbContext.SaveChangesAsync();
 
-            if (statusName == StatusTicket.Resolved)
-            {
-                _mailService.SendMail(mailData, "ticketClosed");
-            }
-        } 
+        }
 
-        public async Task ChangeTicketPriority(Guid id, PriorityTicket priorityName)
+        public async Task ChangeTicketPriority(Guid id, PriorityDto priorityName)
         {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket is null) {
                 throw new Exception("Ticket not found");
             }
-            var priority= await _dbContext.Priorities.FirstOrDefaultAsync(s=>s.Name==priorityName.ToString());
+            var priority= await _dbContext.Priorities.FirstOrDefaultAsync(s=>s.Name==priorityName.Name);
             if (priority is null)
             {
                 throw new Exception("Priority not found");
             }
             ticket.PriorityId = priority.Id;
 
-            _dbContext.Tickets.Update(ticket);
-
             await _dbContext.SaveChangesAsync();
         }
-        public async Task ChangeTicketAssignee(Guid id, string assignee)
+
+        public async Task ChangeTicketAssignee(Guid id, UpdateAssigneeDto assignee)
         {
             var ticket = await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket is null)
@@ -121,10 +113,7 @@ namespace ServiceDesk.Ticket.Api.Services
                 throw new Exception("Ticket not found");
             }
 
-            ticket.Assignee = assignee;
-
-            _dbContext.Tickets.Update(ticket);
-
+            _mapper.Map(assignee, ticket);
             await _dbContext.SaveChangesAsync();
         }
     }

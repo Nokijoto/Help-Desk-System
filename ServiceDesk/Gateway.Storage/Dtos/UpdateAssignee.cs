@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Gateway.Storage.Dtos
 {
-    public class StatusTicketDto
+    public class UpdateAssignee
     {
-        public string Name { get; set; }
+        public string Assignee { get; set; }
     }
 }

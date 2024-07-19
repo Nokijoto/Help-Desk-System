@@ -42,6 +42,9 @@ namespace ServiceDesk.Ticket.Api
             CreateMap<ElementDto, Storage.Entities.Element>();
             CreateMap<Storage.Entities.Element, ElementDto>();
 
+            CreateMap<UpdateAssigneeDto, Storage.Entities.Ticket>();
+
+
         }
     }
 }

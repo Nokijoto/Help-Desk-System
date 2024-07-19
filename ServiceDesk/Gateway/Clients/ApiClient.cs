@@ -40,9 +40,18 @@ namespace Gateway.Clients
         {
             await PutAsync($"{_endpoint}{id}", dto);
         }
-        public async Task UpdateAsynckk(Guid id, TDto dto)
+        public async Task UpdateAssigneeAsync(Guid id, TDto dto)
         {
-            await PostAsync($"{_endpoint}/statusName", dto);
+            await PutAsync($"{_endpoint}{id}/assignee", dto);
+        }
+        public async Task UpdateStatusAsync(Guid id, TDto dto)
+        {
+            await PutAsync($"{_endpoint}{id}/status", dto);
+        }
+        
+        public async Task UpdatePriorityAsync(Guid id, TDto dto)
+        {
+            await PutAsync($"{_endpoint}{id}/priority", dto);
         }
         public async Task DeleteAsync(Guid id)
         {
@@ -91,6 +100,20 @@ namespace Gateway.Clients
         public async Task<TDto> GetByIdAsyncTicket(Guid id)
         {
             return await GetAsync<TDto>($"{_endpoint}{id}");
+        }
+
+
+
+        public async Task UpdateAsynccc(Guid id, TDto dto)
+        {
+            await PutAsynccc($"{_endpoint}/{id}/status", dto);
+        }
+
+        private async Task PutAsynccc<TData>(string requestUri, TData data)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(requestUri, content);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

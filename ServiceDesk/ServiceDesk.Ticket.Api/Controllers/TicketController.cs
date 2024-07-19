@@ -51,20 +51,20 @@ namespace ServiceDesk.Ticket.Api.Controllers
             await _ticketService.UpdateTicket(id, ticketDto);
         }
 
-        [HttpPut("{id}/statusName")]
-        public async Task ChangeTicketStatus(Guid id, [FromQuery] StatusTicket statusName, MailData mailData)
+        [HttpPut("{id}/status")]
+        public async Task ChangeTicketStatus(Guid id, StatusDto statusName)
         {
-            await _ticketService.ChangeTicketStatus(id, statusName, mailData);
+            await _ticketService.ChangeTicketStatus(id, statusName);
         }
 
-        [HttpPut("{id}/priorityName")]
-        public async Task ChangeTicketPriority(Guid id, [FromQuery] PriorityTicket priorityName)
+        [HttpPut("{id}/priority")]
+        public async Task ChangeTicketPriority(Guid id, PriorityDto priorityName)
         {
             await _ticketService.ChangeTicketPriority(id, priorityName);
         }
 
         [HttpPut("{id}/assignee")]
-        public async Task ChangeTicketAssignee(Guid id, [FromQuery] string assignee)
+        public async Task ChangeTicketAssignee(Guid id, UpdateAssigneeDto assignee)
         {
             await _ticketService.ChangeTicketAssignee(id, assignee);
         }
