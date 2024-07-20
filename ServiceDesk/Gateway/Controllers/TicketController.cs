@@ -18,6 +18,8 @@ namespace Gateway.Controllers
         private readonly String mailUrl = "http://localhost:5183/Mail";
         private readonly String serviceUrl = "https://localhost:7061/api/Ticket";
         private readonly String noteServiceUrl = "https://localhost:7061/api/Note";
+        private readonly String taskServiceUrl = "https://localhost:7061/api/Task";
+
 
         public TicketController(IApiClientFactory assetClientFactory)
         {
@@ -38,6 +40,10 @@ namespace Gateway.Controllers
         {
             var Client = _ClientFactory.CreateClient<DetailsTicketDto>($"{serviceUrl}");
             var item = await Client.GetByIdAsyncTicket(id);
+            if (item == null)
+            {
+                return NotFound();
+            }   
             return View(item);
         }
 
@@ -147,7 +153,7 @@ namespace Gateway.Controllers
             var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
             await Client.AddNoteAsync(id,ticketDto);
             //await CreateTicket();
-            return RedirectToAction("Details");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -155,6 +161,10 @@ namespace Gateway.Controllers
         {
             var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
             var item = await Client.GetByIdAsyncTicket(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
             return View(item);
         }
 
@@ -163,7 +173,7 @@ namespace Gateway.Controllers
         {
             var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
             await Client.UpdateNoteAsync(id, ticketDto);
-            return RedirectToAction("Details");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -180,6 +190,58 @@ namespace Gateway.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //Task
+        [HttpGet]
+        public async Task<IActionResult> CreateTask()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateTask(Guid id, TaskDto ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<TaskDto>($"{taskServiceUrl}");
+            await Client.AddTaskAsync(id, ticketDto);
+            //await CreateTicket();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditTask([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<TaskDto>($"{taskServiceUrl}");
+            var item = await Client.GetByIdAsyncTicket(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditTask([FromRoute] Guid id, TaskDto ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<TaskDto>($"{taskServiceUrl}");
+            await Client.UpdateTaskAsync(id, ticketDto);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteTask()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTask([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<TaskDto>($"{taskServiceUrl}");
+            await Client.DeleteAsync(id);
+
+            return RedirectToAction("Index");
+        }
+
+
 
         [HttpPost]
         public async Task CreateTicket()

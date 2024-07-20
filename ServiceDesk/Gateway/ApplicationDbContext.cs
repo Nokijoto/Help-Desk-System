@@ -16,6 +16,7 @@ namespace Gateway
             optionsBuilder.UseSqlServer("Server=DESKTOP-OO8S81V;Database=Gateway;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
         }
         public DbSet<Gateway.Storage.Dtos.NoteDto> NoteDto { get; set; }
+        public DbSet<Gateway.Storage.Dtos.TaskDto> TaskDto { get; set; }
         
         
     }

@@ -39,7 +39,10 @@ namespace Gateway.Clients
         {
             await PostAsync($"{_endpoint}{id}", dto);
         }
-
+        public async Task AddTaskAsync(Guid id, TDto dto)
+        {
+            await PostAsync($"{_endpoint}{id}", dto);
+        }
         public async Task UpdateAsync(Guid id, TDto dto)
         {
             await PutAsync($"{_endpoint}{id}", dto);
@@ -60,6 +63,10 @@ namespace Gateway.Clients
         public async Task UpdateNoteAsync(Guid id, TDto dto)
         {
             await PutAsync($"{_endpoint}{id}/updatenote", dto);
+        }
+        public async Task UpdateTaskAsync(Guid id, TDto dto)
+        {
+            await PutAsync($"{_endpoint}{id}/updatetask", dto);
         }
         public async Task DeleteAsync(Guid id)
         {

@@ -49,20 +49,20 @@
     </dl>
 </div>
 <div>
-    <h4>Tasks</h4>
+    <h4>Tasks <a asp-action="CreateTask" asp-route-id="@Model?.Id">Add Task</a></h4>
     <ul>
         @foreach (var task in Model.Tasks)
         {
             <li>
                 <input type="checkbox"/>
-                @Html.DisplayFor(modelItem => task.Content)
+                @Html.DisplayFor(modelItem => task.Content)  <a asp-action="EditTask" asp-route-id="@task?.Id">Edit</a> | <a asp-action="DeleteTask" asp-route-id="@task?.Id">Delete</a>
             </li>
         }
     </ul>
 </div>
 
 <div>
-    <h4>Notes <a asp-action="CreateNote" asp-route-id="@Model?.Id">Add Note</a> |</h4>
+    <h4>Notes <a asp-action="CreateNote" asp-route-id="@Model?.Id">Add Note</a> </h4>
     <ul>
         @foreach (var note in Model.Notes)
         {
