@@ -62,15 +62,17 @@
 </div>
 
 <div>
-    <h4>Notes</h4>
+    <h4>Notes <a asp-action="CreateNote" asp-route-id="@Model?.Id">Add Note</a> |</h4>
     <ul>
         @foreach (var note in Model.Notes)
         {
-            <li>@Html.DisplayFor(modelItem => note.Content)</li>
+            <li>@Html.DisplayFor(modelItem => note.Content) <a asp-action="EditNote" asp-route-id="@note?.Id">Edit</a> | <a asp-action="DeleteNote" asp-route-id="@note?.Id">Delete</a></li>
         }
     </ul>
 </div>
 <div>
+    
+
     <a asp-action="EditAssignee" asp-route-id="@Model?.Id">Change Assignee</a> |
     <a asp-action="ChangeStatus" asp-route-id="@Model?.Id">Change status</a> |
     <a asp-action="ChangePriority" asp-route-id="@Model?.Id">Change Priority</a> |

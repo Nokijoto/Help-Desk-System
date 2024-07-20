@@ -17,6 +17,8 @@ namespace Gateway.Controllers
         private readonly IApiClientFactory _ClientFactory;
         private readonly String mailUrl = "http://localhost:5183/Mail";
         private readonly String serviceUrl = "https://localhost:7061/api/Ticket";
+        private readonly String noteServiceUrl = "https://localhost:7061/api/Note";
+
         public TicketController(IApiClientFactory assetClientFactory)
         {
             _ClientFactory = assetClientFactory;
@@ -130,7 +132,54 @@ namespace Gateway.Controllers
             await Client.UpdatePriorityAsync(id, ticketDto);
             return RedirectToAction("Index");
         }
+        
+        // Note
+      
 
+        [HttpGet]
+        public async Task<IActionResult> CreateNote()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateNote(Guid id, NoteDto ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
+            await Client.AddNoteAsync(id,ticketDto);
+            //await CreateTicket();
+            return RedirectToAction("Details");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditNote([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
+            var item = await Client.GetByIdAsyncTicket(id);
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditNote([FromRoute] Guid id, NoteDto ticketDto)
+        {
+            var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
+            await Client.UpdateNoteAsync(id, ticketDto);
+            return RedirectToAction("Details");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteNote()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteNote([FromRoute] Guid id)
+        {
+            var Client = _ClientFactory.CreateClient<NoteDto>($"{noteServiceUrl}");
+            await Client.DeleteAsync(id);
+
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public async Task CreateTicket()
