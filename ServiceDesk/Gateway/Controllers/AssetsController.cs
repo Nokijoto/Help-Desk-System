@@ -15,10 +15,11 @@ namespace Gateway.Controllers
     public class AssetsController : Controller
     {
         private readonly IApiClientFactory _ClientFactory;
-        private readonly String serviceUrl = "http://localhost:5256/api/";
+        private readonly String serviceUrl;
         public AssetsController(IApiClientFactory ClientFactory)
         {
             _ClientFactory = ClientFactory;
+            _serviceUrl = configuration.GetSection("ApiSettings:AssetsUrl").Value;
         }
 
         [HttpGet]
@@ -141,8 +142,143 @@ namespace Gateway.Controllers
                 case "cable":
                     var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                     return await cableClient.GetByIdAsync(id);
+                case "device":
+                    var deviceClient = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+                    return await deviceClient.GetByIdAsync(id);
+                case "monitor":
+                    var monitorClient = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+                    return await monitorClient.GetByIdAsync(id);
+                case "pdu":
+                    var pduClient = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+                    return await pduClient.GetByIdAsync(id);
+                case "phone":
+                    var phoneClient = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+                    return await phoneClient.GetByIdAsync(id);
+                case "printer":
+                    var printerClient = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+                    return await printerClient.GetByIdAsync(id);
+                case "rack":
+                    var rackClient = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+                    return await rackClient.GetByIdAsync(id);
+                case "simcard":
+                    var simcardClient = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+                    return await simcardClient.GetByIdAsync(id);
+                case "software":
+                    var softwareClient = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+                    return await softwareClient.GetByIdAsync(id);
                 default:
                     return null;
+            }
+        }
+
+        [HttpPost("{type}")]
+        public async Task<IActionResult> Create(string type, [FromBody] dynamic model)
+        {
+            var result = await CreateItemAsync(type, model);
+            if (!result)
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(GetDetails), new { type, id = model.Guid }, model);
+        }
+
+        private async Task<bool> CreateItemAsync(string type, dynamic model)
+        {
+            try
+            {
+                switch (type.ToLower())
+                {
+                    case "computerdto":
+                        var computerDto = new ComputerDto();
+                        MapDynamicToDto(model, computerDto);
+                        var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+                        await computerClient.CreateAsync(computerDto);
+                        break;
+
+                    case "cabledto":
+                        var cableDto = new CableDto();
+                        MapDynamicToDto(model, cableDto);
+                        var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+                        await cableClient.CreateAsync(cableDto);
+                        break;
+
+                    case "devicedto":
+                        var deviceDto = new DeviceDto();
+                        MapDynamicToDto(model, deviceDto);
+                        var deviceClient = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+                        await deviceClient.CreateAsync(deviceDto);
+                        break;
+
+                    case "monitordto":
+                        var monitorDto = new MonitorDto();
+                        MapDynamicToDto(model, monitorDto);
+                        var monitorClient = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+                        await monitorClient.CreateAsync(monitorDto);
+                        break;
+
+                    case "pdudto":
+                        var pduDto = new PDUDto();
+                        MapDynamicToDto(model, pduDto);
+                        var pduClient = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+                        await pduClient.CreateAsync(pduDto);
+                        break;
+
+                    case "phonedto":
+                        var phoneDto = new PhoneDto();
+                        MapDynamicToDto(model, phoneDto);
+                        var phoneClient = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+                        await phoneClient.CreateAsync(phoneDto);
+                        break;
+
+                    case "printerdto":
+                        var printerDto = new PrinterDto();
+                        MapDynamicToDto(model, printerDto);
+                        var printerClient = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+                        await printerClient.CreateAsync(printerDto);
+                        break;
+
+                    case "rackdto":
+                        var rackDto = new RackDto();
+                        MapDynamicToDto(model, rackDto);
+                        var rackClient = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+                        await rackClient.CreateAsync(rackDto);
+                        break;
+
+                    case "simcarddto":
+                        var simcardDto = new SimcardDto();
+                        MapDynamicToDto(model, simcardDto);
+                        var simcardClient = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+                        await simcardClient.CreateAsync(simcardDto);
+                        break;
+
+                    case "softwaredto":
+                        var softwareDto = new SoftwareDto();
+                        MapDynamicToDto(model, softwareDto);
+                        var softwareClient = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+                        await softwareClient.CreateAsync(softwareDto);
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        private void MapDynamicToDto(dynamic source, object destination)
+        {
+            foreach (var prop in destination.GetType().GetProperties())
+            {
+                var value = source.GetType().GetProperty(prop.Name)?.GetValue(source, null);
+                if (value != null)
+                {
+                    prop.SetValue(destination, value);
+                }
             }
         }
 
@@ -209,18 +345,75 @@ namespace Gateway.Controllers
                         MapDynamicToDto(model, computerDto);
                         var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
                         await computerClient.UpdateAsync((Guid)model.Guid, computerDto);
-                        return true;
+                        break;
 
                     case "cabledto":
                         var cableDto = new CableDto();
                         MapDynamicToDto(model, cableDto);
                         var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                         await cableClient.UpdateAsync((Guid)model.Guid, cableDto);
-                        return true;
+                        break;
+
+                    case "devicedto":
+                        var deviceDto = new DeviceDto();
+                        MapDynamicToDto(model, deviceDto);
+                        var deviceClient = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+                        await deviceClient.UpdateAsync((Guid)model.Guid, deviceDto);
+                        break;
+
+                    case "monitordto":
+                        var monitorDto = new MonitorDto();
+                        MapDynamicToDto(model, monitorDto);
+                        var monitorClient = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+                        await monitorClient.UpdateAsync((Guid)model.Guid, monitorDto);
+                        break;
+
+                    case "pdudto":
+                        var pduDto = new PDUDto();
+                        MapDynamicToDto(model, pduDto);
+                        var pduClient = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+                        await pduClient.UpdateAsync((Guid)model.Guid, pduDto);
+                        break;
+
+                    case "phonedto":
+                        var phoneDto = new PhoneDto();
+                        MapDynamicToDto(model, phoneDto);
+                        var phoneClient = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+                        await phoneClient.UpdateAsync((Guid)model.Guid, phoneDto);
+                        break;
+
+                    case "printerdto":
+                        var printerDto = new PrinterDto();
+                        MapDynamicToDto(model, printerDto);
+                        var printerClient = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+                        await printerClient.UpdateAsync((Guid)model.Guid, printerDto);
+                        break;
+
+                    case "rackdto":
+                        var rackDto = new RackDto();
+                        MapDynamicToDto(model, rackDto);
+                        var rackClient = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+                        await rackClient.UpdateAsync((Guid)model.Guid, rackDto);
+                        break;
+
+                    case "simcarddto":
+                        var simcardDto = new SimcardDto();
+                        MapDynamicToDto(model, simcardDto);
+                        var simcardClient = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+                        await simcardClient.UpdateAsync((Guid)model.Guid, simcardDto);
+                        break;
+
+                    case "softwaredto":
+                        var softwareDto = new SoftwareDto();
+                        MapDynamicToDto(model, softwareDto);
+                        var softwareClient = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+                        await softwareClient.UpdateAsync((Guid)model.Guid, softwareDto);
+                        break;
 
                     default:
                         return false;
                 }
+                return true;
             }
             catch (Exception ex)
             {
@@ -270,7 +463,7 @@ namespace Gateway.Controllers
             return View("GenericDelete", item);
         }
 
-     
+
 
         private async Task<bool> DeleteItemAsync(string type, Guid id)
         {
@@ -279,14 +472,47 @@ namespace Gateway.Controllers
                 case "computerdto":
                     var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
                     await computerClient.DeleteAsync(id);
-                    return true;
+                    break;
                 case "cabledto":
                     var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
                     await cableClient.DeleteAsync(id);
-                    return true;
+                    break;
+                case "devicedto":
+                    var deviceClient = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+                    await deviceClient.DeleteAsync(id);
+                    break;
+                case "monitordto":
+                    var monitorClient = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+                    await monitorClient.DeleteAsync(id);
+                    break;
+                case "pdudto":
+                    var pduClient = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+                    await pduClient.DeleteAsync(id);
+                    break;
+                case "phonedto":
+                    var phoneClient = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+                    await phoneClient.DeleteAsync(id);
+                    break;
+                case "printerdto":
+                    var printerClient = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+                    await printerClient.DeleteAsync(id);
+                    break;
+                case "rackdto":
+                    var rackClient = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+                    await rackClient.DeleteAsync(id);
+                    break;
+                case "simcarddto":
+                    var simcardClient = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+                    await simcardClient.DeleteAsync(id);
+                    break;
+                case "softwaredto":
+                    var softwareClient = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+                    await softwareClient.DeleteAsync(id);
+                    break;
                 default:
                     return false;
             }
+            return true;
         }
     }
 }

@@ -8,6 +8,7 @@
         var modelType = Model.First().GetType();
 
         <div class="table-container">
+            <a asp-action="Create" asp-route-type="@item.Discriminator" class="btn btn-info btn-sm">Utwórz</a>
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>

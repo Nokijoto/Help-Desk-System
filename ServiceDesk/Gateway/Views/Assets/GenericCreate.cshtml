@@ -1,0 +1,35 @@
+﻿<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create Item</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @foreach (var property in Model.GetType().GetProperties())
+                {
+                    if (property.Name == "Guid" || property.Name == "Discriminator" || property.Name == "Type")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label class="control-label">@property.Name</label>
+                            <input type="text" name="@property.Name" class="form-control" />
+                            @if (ViewData.ModelState.ContainsKey(property.Name) && ViewData.ModelState[property.Name].Errors.Count > 0)
+                            {
+                                <span class="text-danger">@ViewData.ModelState[property.Name].Errors[0].ErrorMessage</span>
+                            }
+                        </div>
+                    }
+                }
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" asp-controller="Assets" class="btn btn-secondary">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
