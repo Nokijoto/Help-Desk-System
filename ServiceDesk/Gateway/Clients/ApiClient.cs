@@ -43,6 +43,10 @@ namespace Gateway.Clients
         {
             await PostAsync($"{_endpoint}{id}", dto);
         }
+        public async Task AddElementAsync(Guid id, TDto dto)
+        {
+            await PostAsync($"{_endpoint}{id}/dodaj", dto);
+        }
         public async Task UpdateAsync(Guid id, TDto dto)
         {
             await PutAsync($"{_endpoint}{id}", dto);
@@ -117,7 +121,14 @@ namespace Gateway.Clients
             return await GetAsync<TDto>($"{_endpoint}{id}");
         }
 
+        public async Task<IEnumerable<AssetDto>> GetByIdElementAsync(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"{_endpoint}{id}");
+            response.EnsureSuccessStatusCode();
 
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<AssetDto>>(content);
+        }
 
         public async Task UpdateAsynccc(Guid id, TDto dto)
         {

@@ -71,8 +71,8 @@
     </ul>
 </div>
 <div>
-    
-
+    <a asp-action="CreateElements" asp-route-id="@Model?.Id">Create Element</a> |
+    <a asp-action="GetElements" asp-route-id="@Model?.Id">Get Element</a> |
     <a asp-action="EditAssignee" asp-route-id="@Model?.Id">Change Assignee</a> |
     <a asp-action="ChangeStatus" asp-route-id="@Model?.Id">Change status</a> |
     <a asp-action="ChangePriority" asp-route-id="@Model?.Id">Change Priority</a> |

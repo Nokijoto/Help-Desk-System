@@ -17,6 +17,8 @@ namespace Gateway
         }
         public DbSet<Gateway.Storage.Dtos.NoteDto> NoteDto { get; set; }
         public DbSet<Gateway.Storage.Dtos.TaskDto> TaskDto { get; set; }
+        public DbSet<Gateway.Storage.Dtos.ElementDto> ElementDto { get; set; }
+        public DbSet<Gateway.Storage.Dtos.AssetDto> AssetDto { get; set; }
         
         
     }

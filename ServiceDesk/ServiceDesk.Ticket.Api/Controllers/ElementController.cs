@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceDesk.Assets.CrossCutting.Dtos;
 using ServiceDesk.Ticket.Api.Interfaces;
+using ServiceDesk.Ticket.CrossCutting.Dots;
 
 namespace ServiceDesk.Ticket.Api.Controllers
 {
@@ -12,20 +14,20 @@ namespace ServiceDesk.Ticket.Api.Controllers
         {
             _elementService=elementService;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetElement(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetElement([FromRoute] Guid id)
         {
             var elements = await _elementService.GetAssetsForTicket(id);
             return Ok(elements);
         }
-        [HttpPost]
-        public async Task<IActionResult> AddElements(Guid id, string assetId) //do poprwy
+        [HttpPost("{id}/dodaj")]
+        public async Task<IActionResult> AddElements([FromRoute] Guid id, [FromBody] ElementDtoName assetId) 
         {
-            await _elementService.AddElements(id, assetId);
+            await _elementService.AddElements(id, assetId.Name);
             return Ok();
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteElement(Guid id)
+        public async Task<IActionResult> DeleteElement([FromRoute] Guid id)
         {
             try
             {

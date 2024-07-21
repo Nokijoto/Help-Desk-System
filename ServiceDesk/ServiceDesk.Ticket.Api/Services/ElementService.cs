@@ -25,16 +25,12 @@ namespace ServiceDesk.Ticket.Api.Services
 
         public async Task<IEnumerable<AssetDto>> GetAssetsForTicket(Guid ticketId)
         {
-            // Pobierz elementy powiązane ze zgłoszeniem
             var elements = await _ticketDbContext.Elements.Where(x => x.TicketId == ticketId).ToListAsync();
 
-            // Zbierz identyfikatory zasobów
             var assetIds = elements.Select(x => x.AssertId).ToList();
 
-            // Pobierz zasoby z bazy danych zasobów
             var assets = await _assetsDb.Assets.Where(x => assetIds.Contains(x.Guid)).ToListAsync();
 
-            // Zamapuj zasoby na AssetDto
             var assetDtos = assets.Select(a => new AssetDto
             {
                 Name = a.Name,
