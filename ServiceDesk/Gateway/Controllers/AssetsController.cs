@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Configuration;
+using Gateway.Storage.Dtos.AssetsCreateDto;
 
 namespace Gateway.Controllers
 {
@@ -221,25 +222,25 @@ namespace Gateway.Controllers
             switch (type.ToLower())
             {
                 case "computerdto":
-                    return new ComputerDto();
+                    return new CreateComputerDto();
                 case "cabledto":
-                    return new CableDto();
+                    return new CreateCableDto();
                 case "devicedto":
-                    return new DeviceDto();
+                    return new CreateDeviceDto();
                 case "monitordto":
-                    return new MonitorDto();
+                    return new CreateMonitorDto();
                 case "pdudto":
-                    return new PDUDto();
+                    return new CreatePDUDto();
                 case "phonedto":
-                    return new PhoneDto();
+                    return new CreatePhoneDto();
                 case "printerdto":
-                    return new PrinterDto();
+                    return new CreatePrinterDto();
                 case "rackdto":
-                    return new RackDto();
+                    return new CreateRackDto();
                 case "simcarddto":
-                    return new SimcardDto();
+                    return new CreateSimcardDto();
                 case "softwaredto":
-                    return new SoftwareDto();
+                    return new CreateSoftwareDto();
                 default:
                     return null;
             }
@@ -251,72 +252,72 @@ namespace Gateway.Controllers
                 switch (type.ToLower())
                 {
                     case "computerdto":
-                        var computerDto = new ComputerDto();
+                        var computerDto = new CreateComputerDto();
                         MapDynamicToDto(model, computerDto);
-                        var computerClient = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+                        var computerClient = _ClientFactory.CreateClient<CreateComputerDto>($"{serviceUrl}Computer");
                         await computerClient.CreateAsync(computerDto);
                         break;
 
                     case "cabledto":
-                        var cableDto = new CableDto();
+                        var cableDto = new CreateCableDto();
                         MapDynamicToDto(model, cableDto);
-                        var cableClient = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+                        var cableClient = _ClientFactory.CreateClient<CreateCableDto>($"{serviceUrl}Cable");
                         await cableClient.CreateAsync(cableDto);
                         break;
 
                     case "devicedto":
-                        var deviceDto = new DeviceDto();
+                        var deviceDto = new CreateDeviceDto();
                         MapDynamicToDto(model, deviceDto);
-                        var deviceClient = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+                        var deviceClient = _ClientFactory.CreateClient<CreateDeviceDto>($"{serviceUrl}Device");
                         await deviceClient.CreateAsync(deviceDto);
                         break;
 
                     case "monitordto":
-                        var monitorDto = new MonitorDto();
+                        var monitorDto = new CreateMonitorDto();
                         MapDynamicToDto(model, monitorDto);
-                        var monitorClient = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+                        var monitorClient = _ClientFactory.CreateClient<CreateMonitorDto>($"{serviceUrl}Monitor");
                         await monitorClient.CreateAsync(monitorDto);
                         break;
 
                     case "pdudto":
-                        var pduDto = new PDUDto();
+                        var pduDto = new CreatePDUDto();
                         MapDynamicToDto(model, pduDto);
-                        var pduClient = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+                        var pduClient = _ClientFactory.CreateClient<CreatePDUDto>($"{serviceUrl}PDU");
                         await pduClient.CreateAsync(pduDto);
                         break;
 
                     case "phonedto":
-                        var phoneDto = new PhoneDto();
+                        var phoneDto = new CreatePhoneDto();
                         MapDynamicToDto(model, phoneDto);
-                        var phoneClient = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+                        var phoneClient = _ClientFactory.CreateClient<CreatePhoneDto>($"{serviceUrl}Phone");
                         await phoneClient.CreateAsync(phoneDto);
                         break;
 
                     case "printerdto":
-                        var printerDto = new PrinterDto();
+                        var printerDto = new CreatePrinterDto();
                         MapDynamicToDto(model, printerDto);
-                        var printerClient = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+                        var printerClient = _ClientFactory.CreateClient<CreatePrinterDto>($"{serviceUrl}Printer");
                         await printerClient.CreateAsync(printerDto);
                         break;
 
                     case "rackdto":
-                        var rackDto = new RackDto();
+                        var rackDto = new CreateRackDto();
                         MapDynamicToDto(model, rackDto);
-                        var rackClient = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+                        var rackClient = _ClientFactory.CreateClient<CreateRackDto>($"{serviceUrl}Rack");
                         await rackClient.CreateAsync(rackDto);
                         break;
 
                     case "simcarddto":
-                        var simcardDto = new SimcardDto();
+                        var simcardDto = new CreateSimcardDto();
                         MapDynamicToDto(model, simcardDto);
-                        var simcardClient = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+                        var simcardClient = _ClientFactory.CreateClient<CreateSimcardDto>($"{serviceUrl}Simcard");
                         await simcardClient.CreateAsync(simcardDto);
                         break;
 
                     case "softwaredto":
-                        var softwareDto = new SoftwareDto();
+                        var softwareDto = new CreateSoftwareDto();
                         MapDynamicToDto(model, softwareDto);
-                        var softwareClient = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+                        var softwareClient = _ClientFactory.CreateClient<CreateSoftwareDto>($"{serviceUrl}Software");
                         await softwareClient.CreateAsync(softwareDto);
                         break;
 
