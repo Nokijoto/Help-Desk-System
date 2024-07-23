@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace Gateway.Controllers
 {
@@ -16,10 +19,10 @@ namespace Gateway.Controllers
     {
         private readonly IApiClientFactory _ClientFactory;
         private readonly String serviceUrl;
-        public AssetsController(IApiClientFactory ClientFactory)
+        public AssetsController(IApiClientFactory ClientFactory, IConfiguration configuration) 
         {
             _ClientFactory = ClientFactory;
-            _serviceUrl = configuration.GetSection("ApiSettings:AssetsUrl").Value;
+            serviceUrl = configuration.GetSection("ApiSettings:AssetsUrl").Value;
         }
 
         [HttpGet]
@@ -34,6 +37,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Computers()
         {
             var Client = _ClientFactory.CreateClient<ComputerDto>($"{serviceUrl}Computer");
+              ViewBag.DtoType = "ComputerDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
          
@@ -44,6 +48,7 @@ namespace Gateway.Controllers
         {
 
             var Client = _ClientFactory.CreateClient<CableDto>($"{serviceUrl}Cable");
+            ViewBag.DtoType = "CableDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
 
@@ -54,6 +59,7 @@ namespace Gateway.Controllers
         {
 
             var Client = _ClientFactory.CreateClient<PhoneDto>($"{serviceUrl}Phone");
+            ViewBag.DtoType = "PhoneDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
 
@@ -62,6 +68,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Device()
         {
             var Client = _ClientFactory.CreateClient<DeviceDto>($"{serviceUrl}Device");
+            ViewBag.DtoType = "DeviceDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -70,6 +77,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Rack()
         {
             var Client = _ClientFactory.CreateClient<RackDto>($"{serviceUrl}Rack");
+            ViewBag.DtoType = "RackDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -79,6 +87,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> PDU()
         {
             var Client = _ClientFactory.CreateClient<PDUDto>($"{serviceUrl}PDU");
+            ViewBag.DtoType = "PDUDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -88,6 +97,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Printer()
         {
             var Client = _ClientFactory.CreateClient<PrinterDto>($"{serviceUrl}Printer");
+            ViewBag.DtoType = "PrinterDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -97,6 +107,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Monitor()
         {
             var Client = _ClientFactory.CreateClient<MonitorDto>($"{serviceUrl}Monitor");
+            ViewBag.DtoType = "MonitorDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -105,6 +116,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Simcard()
         {
             var Client = _ClientFactory.CreateClient<SimcardDto>($"{serviceUrl}Simcard");
+            ViewBag.DtoType = "SimcardDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -113,6 +125,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Software()
         {
             var Client = _ClientFactory.CreateClient<SoftwareDto>($"{serviceUrl}Software");
+            ViewBag.DtoType = "SoftwareDto";
             var items = await Client.GetAllAsync();
             return View("GenericView", items);
         }
@@ -171,17 +184,66 @@ namespace Gateway.Controllers
             }
         }
 
-        [HttpPost("{type}")]
-        public async Task<IActionResult> Create(string type, [FromBody] dynamic model)
+        [HttpGet("Create/{type}")]
+        public IActionResult Create(string type)
         {
+            dynamic model = GetModelByType(type);
+            if (model == null)
+            {
+                return BadRequest("Invalid type");
+            }
+
+            ViewBag.DtoType = type;
+            return View("GenericCreate", model);
+        }
+
+        [HttpPost("Create/{type}")]
+        public async Task<IActionResult> Create(string type, [FromForm] Dictionary<string, string> formValues)
+        {
+            var model = GetModelByType(type);
+            if (model == null)
+            {
+                return BadRequest("Invalid type");
+            }
+
+            MapFormValuesToModel(formValues, model);
+
             var result = await CreateItemAsync(type, model);
             if (!result)
             {
                 return BadRequest();
             }
-            return CreatedAtAction(nameof(GetDetails), new { type, id = model.Guid }, model);
+            return RedirectToAction("GenericView", new { type });
         }
 
+        private dynamic GetModelByType(string type)
+        {
+            switch (type.ToLower())
+            {
+                case "computerdto":
+                    return new ComputerDto();
+                case "cabledto":
+                    return new CableDto();
+                case "devicedto":
+                    return new DeviceDto();
+                case "monitordto":
+                    return new MonitorDto();
+                case "pdudto":
+                    return new PDUDto();
+                case "phonedto":
+                    return new PhoneDto();
+                case "printerdto":
+                    return new PrinterDto();
+                case "rackdto":
+                    return new RackDto();
+                case "simcarddto":
+                    return new SimcardDto();
+                case "softwaredto":
+                    return new SoftwareDto();
+                default:
+                    return null;
+            }
+        }
         private async Task<bool> CreateItemAsync(string type, dynamic model)
         {
             try
@@ -265,23 +327,51 @@ namespace Gateway.Controllers
             }
             catch (Exception ex)
             {
+                // Log exception
                 return false;
             }
         }
 
-
-        private void MapDynamicToDto(dynamic source, object destination)
+        private void MapFormValuesToModel(Dictionary<string, string> formValues, dynamic model)
         {
-            foreach (var prop in destination.GetType().GetProperties())
+            foreach (var property in model.GetType().GetProperties())
             {
-                var value = source.GetType().GetProperty(prop.Name)?.GetValue(source, null);
-                if (value != null)
+                if (formValues.ContainsKey(property.Name))
                 {
-                    prop.SetValue(destination, value);
+                    var value = Convert.ChangeType(formValues[property.Name], property.PropertyType);
+                    property.SetValue(model, value);
                 }
             }
         }
 
+
+        //private void MapDynamicToDto(dynamic source, object destination)
+        //{
+        //    foreach (var prop in destination.GetType().GetProperties())
+        //    {
+        //        var value = source.GetType().GetProperty(prop.Name)?.GetValue(source, null);
+        //        if (value != null)
+        //        {
+        //            prop.SetValue(destination, value);
+        //        }
+        //    }
+        //}
+        private void MapDynamicToDto(dynamic source, object destination)
+        {
+            var sourceDict = (IDictionary<string, object>)source;
+
+            foreach (var property in destination.GetType().GetProperties())
+            {
+                if (property.CanWrite && sourceDict.ContainsKey(property.Name))
+                {
+                    var value = sourceDict[property.Name];
+                    if (value != null)
+                    {
+                        property.SetValue(destination, Convert.ChangeType(value, property.PropertyType));
+                    }
+                }
+            }
+        }
 
 
         [HttpGet]
@@ -421,22 +511,7 @@ namespace Gateway.Controllers
             }
         }
 
-        private void MapDynamicToDto(dynamic source, object destination)
-        {
-            var sourceDict = (IDictionary<string, object>)source;
-
-            foreach (var property in destination.GetType().GetProperties())
-            {
-                if (property.CanWrite && sourceDict.ContainsKey(property.Name))
-                {
-                    var value = sourceDict[property.Name];
-                    if (value != null)
-                    {
-                        property.SetValue(destination, Convert.ChangeType(value, property.PropertyType));
-                    }
-                }
-            }
-        }
+       
 
 
         [HttpGet]

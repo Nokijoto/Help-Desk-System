@@ -1,10 +1,35 @@
-﻿<div class="container mt-4">
+﻿@model dynamic
+@{
+    var dtoType = ViewBag.DtoType;
+}
+@{
+    var excludedProperties = new List<string>
+    {
+    "Id", "Guid", "CreatedAt", "UpdatedAt", "CreatedBy", "UpdatedBy",
+    "EmailToId", "EmailToName", "EmailSubject", "EmailBody", // MailDto.cs
+    "DeviceType", "IsPortable", "Connectivity", // DeviceDto.cs
+    "CableType", "Length", "ConnectorType", "IsShielded", // CableDto.cs
+    "NumberOfUnits", "MaxWeight", "IsVentilated", "PowerCapacity", // RackDto.cs
+    "NumberOfPorts", "MaxPowerOutput", "IsManaged", "ConnectionType", // PDUDto.cs
+    "IsColor", "PrintSpeed", "PrinterType", "HasScanner", "PaperCapacity", // PrinterDto.cs
+    "ScreenSize", "Resolution", "PanelType", "IsCurved", "RefreshRate", // MonitorDto.cs
+    "PhoneNumber", "Carrier", "OperatingSystem", "StorageSize", "IsSmartphone", "IMEI", // PhoneDto.cs
+    "OperatingSystem", "RAMSize", "StorageSize", "Processor", "HasGraphicsCard", "GraphicsCardModel", // ComputerDto.cs
+    "PhoneNumber", "Carrier", "PlanType", "ActivationDate", "ExpiryDate", // SimcardDto.cs
+    "Version", "LicenseKey", "LicenseExpiryDate", "NumberOfUsers", "Vendor", // SoftwareDto.cs
+    "PurchaseDate", "PurchasePrice", "Technician", "Comment", "Discriminator", // AssetDto.cs
+    "AssetType", "Model", "Name" // AssetDto.cs
+    };
+
+
+}
+<div class="container mt-4">
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Create Item</h4>
+            <h4 class="mb-0">Utwórz @dtoType</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Create" method="post">
+            <form asp-action="Create" asp-route-type="@dtoType" method="post">
                 @foreach (var property in Model.GetType().GetProperties())
                 {
                     if (property.Name == "Guid" || property.Name == "Discriminator" || property.Name == "Type")

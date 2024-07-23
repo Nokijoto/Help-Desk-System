@@ -10,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -22,8 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailService, MailService>();
 
-
-
+// Configure Serilog
 var logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -33,35 +31,23 @@ var logger = new LoggerConfiguration()
         connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
         sinkOptions: new MSSqlServerSinkOptions
         {
-            AutoCreateSqlTable = true,
+            AutoCreateSqlTable = false,
             TableName = "EmailLogs"
         },
         restrictedToMinimumLevel: LogEventLevel.Information
     )
     .CreateLogger();
 
-//Add the logger to the services
+// Add the logger to the services
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
-
-// Configure EF Core with SQL Server
-
-
-
-builder.Services.AddSingleton<Serilog.ILogger>(logger);
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
-
+builder.Services.AddSingleton(logger);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-// TODO: DELETE THIS BEFORE
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseAuthorization();
 

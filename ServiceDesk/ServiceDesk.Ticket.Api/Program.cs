@@ -57,14 +57,13 @@ var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
 seeder.Seed();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseDeveloperExceptionPage();
 
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
-}
+
+
   using (var dbContext = scope.ServiceProvider.GetRequiredService<TicketDbContext>())
     {
         if (dbContext.Database.GetPendingMigrations().Any())
