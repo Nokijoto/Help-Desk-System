@@ -1,0 +1,82 @@
+﻿@model IEnumerable<dynamic>
+@using Gateway.Helpers
+<div class="container">
+    <h1 class="text-center mb-4">Zasoby</h1>
+
+    @{
+        var excludedProperties = new List<string>
+    {
+    "Id", "Guid", "CreatedAt", "UpdatedAt", "CreatedBy", "UpdatedBy",
+    "EmailToId", "EmailToName", "EmailSubject", "EmailBody", // MailDto.cs
+    "DeviceType", "IsPortable", "Connectivity", // DeviceDto.cs
+    "CableType", "Length", "ConnectorType", "IsShielded", // CableDto.cs
+    "NumberOfUnits", "MaxWeight", "IsVentilated", "PowerCapacity", // RackDto.cs
+    "NumberOfPorts", "MaxPowerOutput", "IsManaged", "ConnectionType", // PDUDto.cs
+    "IsColor", "PrintSpeed", "PrinterType", "HasScanner", "PaperCapacity", // PrinterDto.cs
+    "ScreenSize", "Resolution", "PanelType", "IsCurved", "RefreshRate", // MonitorDto.cs
+    "PhoneNumber", "Carrier", "OperatingSystem", "StorageSize", "IsSmartphone", "IMEI", // PhoneDto.cs
+    "OperatingSystem", "RAMSize", "StorageSize", "Processor", "HasGraphicsCard", "GraphicsCardModel", // ComputerDto.cs
+    "PhoneNumber", "Carrier", "PlanType", "ActivationDate", "ExpiryDate", // SimcardDto.cs
+    "Version", "LicenseKey", "LicenseExpiryDate", "NumberOfUsers", "Vendor", // SoftwareDto.cs
+    "PurchaseDate", "PurchasePrice", "Technician", "Comment", "Discriminator", // AssetDto.cs
+    "AssetType", "Model", "Name" // AssetDto.cs
+    };
+
+        var modelType = Model?.FirstOrDefault()?.GetType();
+        var hasDiscriminator = modelType?.GetProperty("Discriminator") != null;
+        var discriminatorValue = ViewBag.Discriminator;
+    }
+
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" asp-route-type="@ViewBag.DtoType" class="btn btn-info btn-sm">Utwórz</a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-container">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        @foreach (var property in modelType.GetProperties())
+                        {
+                            @if (!excludedProperties.Contains(property.Name))
+                            {
+                                <th>@DisplayNameHelper.GetDisplayName(modelType, property.Name)</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @foreach (var property in item.GetType().GetProperties())
+                            {
+                                @if (!excludedProperties.Contains(property.Name))
+                                {
+                                    <td>@property.GetValue(item)</td>
+                                }
+                            }
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Discriminator))
+                                {
+                                    <a asp-action="Details" asp-route-type="@item.Discriminator" asp-route-id="@item.Guid" class="btn btn-info btn-sm">Szczegóły</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.Guid" class="btn btn-info btn-sm">Szczegóły</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="table-container">
+            <p class="text-center">No assets available.</p>
+        </div>
+    }
+</div>

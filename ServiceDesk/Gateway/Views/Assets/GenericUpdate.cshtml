@@ -1,0 +1,39 @@
+﻿@model dynamic
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit Item</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                @foreach (var property in Model.GetType().GetProperties())
+                {
+                    var value = property.GetValue(Model, null) ?? string.Empty;
+
+                    if (property.Name == "Guid" || property.Name == "Discriminator" || property.Name == "Type")
+                    {
+                        <input type="text" name="@property.Name" value="@value" />
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label class="control-label">@property.Name</label>
+                            <input type="text" name="@property.Name" class="form-control" value="@value" />
+                            @if (ViewData.ModelState.ContainsKey(property.Name) && ViewData.ModelState[property.Name].Errors.Count > 0)
+                            {
+                                <span class="text-danger">@ViewData.ModelState[property.Name].Errors[0].ErrorMessage</span>
+                            }
+                        </div>
+                    }
+                }
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+                <a asp-action="@Model.Discriminator" asp-controller="Assets" class="btn btn-secondary">Cofnij</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

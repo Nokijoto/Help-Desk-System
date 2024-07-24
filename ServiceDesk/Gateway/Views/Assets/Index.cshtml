@@ -1,0 +1,25 @@
+﻿@model dynamic
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Delete Item</h4>
+        </div>
+        <div class="card-body">
+            <h5>Are you sure you want to delete this item?</h5>
+            <dl class="row">
+                @foreach (var property in Model.GetType().GetProperties())
+                {
+                    <dt class="col-sm-3">@property.Name</dt>
+                    <dd class="col-sm-9">@property.GetValue(Model)</dd>
+                }
+            </dl>
+            <form asp-action="Delete" method="post">
+                <input type="hidden" name="Guid" value="@Model.Guid" />
+                <input type="hidden" name="Type" value="@Model.GetType().Name.ToLower()" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
