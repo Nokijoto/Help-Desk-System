@@ -12,7 +12,9 @@
     <div class="container">
         <h1 class="display-4">Witamy w Service Desk Brama</h1>
         <p class="lead">Twoje jedno miejsce do wsparcia IT i pomocy technicznej.</p>
-        <a href="#" class="btn btn-primary btn-lg">Zgłoś problem</a>
+        <form asp-controller="Ticket" asp-action="Create" method="get">
+    <button type="submit" class="btn btn-primary btn-lg">Zgłoś problem</button>
+</form>
     </div>
 </div>
 
