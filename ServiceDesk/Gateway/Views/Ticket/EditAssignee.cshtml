@@ -1,32 +1,30 @@
-﻿@model Gateway.Storage.Dtos.UpdateAssignee
+@model Gateway.Storage.Dtos.UpdateAssignee
 
 @{
-    ViewData["Title"] = "EditAssignee";
+    ViewData["Title"] = "Edytuj osobę przypisaną";
 }
 
-<h1>EditAssignee</h1>
-
-<h4>UpdateAssignee</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditAssignee">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            <div class="form-group">
-                <label asp-for="Assignee" class="control-label"></label>
-                <input asp-for="Assignee" class="form-control" />
-                <span asp-validation-for="Assignee" class="text-danger"></span>
+<div class="container mt-4">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="EditAssignee">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Assignee" class="control-label">Osoba przypisana</label>
+                    <input asp-for="Assignee" class="form-control" />
+                    <span asp-validation-for="Assignee" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Zapisz" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <a class="btn btn-secondary" asp-action="Index">Cofnij</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
