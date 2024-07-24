@@ -149,23 +149,10 @@ namespace Gateway.Clients
         public async Task<IEnumerable<AssetDto>> GetByIdElementAsync(Guid id)
         {
             var response = await _httpClient.GetAsync($"{_endpoint}{id}");
-            response.EnsureSuccessStatusCode();
+response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            try
-            {
-                var jObject = JObject.Parse(content);
-                if (jObject["result"] != null)
-                {
-                    return jObject["result"].ToObject<List<AssetDto>>();
-                }
-                return JsonConvert.DeserializeObject<List<AssetDto>>(content);
-            }
-            catch (JsonSerializationException ex)
-            {
-                // Log the exception or handle it according to your needs
-                throw new InvalidOperationException($"Error deserializing the response: {content}", ex);
-            }
+var content = await response.Content.ReadAsStringAsync();
+return JsonConvert.DeserializeObject<List<AssetDto>>(content);
         }
 
         public async Task UpdateAsynccc(Guid id, TDto dto)
