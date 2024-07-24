@@ -1,41 +1,41 @@
-﻿@model Gateway.Storage.Dtos.CreateTicketDto
+@model Gateway.Storage.Dtos.CreateTicketDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Dodaj zgłoszenie";
 }
 
-<h1>Create</h1>
 
-<h4>CreateTicketDto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+<div class="container mt-4">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label">Tytuł</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Opis</label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Requester" class="control-label">Zgłaszający</label>
+                    <input asp-for="Requester" class="form-control" />
+                    <span asp-validation-for="Requester" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Stwórz" class="btn btn-primary" />
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <a class="btn btn-secondary" asp-action="Index">Wróć</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Requester" class="control-label"></label>
-                <input asp-for="Requester" class="form-control" />
-                <span asp-validation-for="Requester" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
